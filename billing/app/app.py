@@ -43,24 +43,24 @@ def provider():
     # return POST_provider()
 
 
-@app.route("/api/provider/<id>/", methods=['PUT'])
+@app.route("/api/provider/<id>", methods=['PUT'])
 def put_provider_id(id):
         return PUT_provider(id)
 
 @app.route("/api/provider/<id>/", methods=['GET'])
 def put_provider_render():
     return render_template('provider_id.html')
-    
-@app.route('/truck', methods=['POST'])
-def post_truck():
-    return POST_truck()
 
 @app.route("/provider/<int:id>")
 def provider_id(id):
     if id < 10001:
-       return f'You are not allowed'
+       return f'You are not allowed - Id does not exist'
     else:
         return render_template('provider_id.html')
+    
+@app.route('/truck', methods=['POST'])
+def post_truck():
+    return POST_truck()
 
 @app.route('/truck/1000', methods=['PUT'])
 def put_truck():
