@@ -48,6 +48,8 @@
       function updateChat() {
         $.get(room(),function(data) {
           $("#chatbox").text(data);
+          $("#provid").text("Your about to update this " + room(roomname) + "Please enter new name:");
+
           window.setTimeout(updateChat,15000);
         })
       }
@@ -70,11 +72,11 @@
     </head>
     <body>
     <nav class="navigation">
-      <a class="NavUpdateProvider" href="http://localhost:5000/provider_id">Update Provider</a>
+      <a class="NavUpdateProvider" href="http://localhost:5000/provider">Enter new provider</a>
 
     </nav>
     <div class="contentBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray">
-        <h3>Enter new provider: </h3>
+      <pre id="provid">Loading...</pre>
       <form id="inform" action="/api/provider.html" method="POST">
         <input name="provider" type=text >
         <input id="sendBtn" type="button" value="submit">

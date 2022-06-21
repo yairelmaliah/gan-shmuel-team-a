@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import json
 from db_utils import db_utils
 
@@ -19,7 +19,10 @@ def push_new_provider():
     id = mysql.getData("SELECT id FROM Provider ORDER BY id DESC LIMIT 1;")
     return json.dumps(id)
 
-def POST_provider():
+def PUT_provider(id):
+    return "OK"
+    
+
     try:
         if not data_exist():
             return push_new_provider(), 200 # does not exist
@@ -29,5 +32,4 @@ def POST_provider():
 
 
 if __name__ == '__main__':
-    POST_provider()
-    data_exist()
+    PUT_provider(id)

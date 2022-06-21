@@ -19,9 +19,10 @@ services:
     restart: always
     # volumes:
     #   - ${DYNAMIC_PATH_APP}/rates:/in
-    # hostname: billingapp
+    volumes:
+      - ./app:/src/app
     build: .
     ports:
-      - 8081:5000
+      - 5000:5000
     depends_on:
       - "billing_db"

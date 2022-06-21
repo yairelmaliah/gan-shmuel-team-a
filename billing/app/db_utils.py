@@ -1,3 +1,4 @@
+from unittest import result
 import mysql.connector
 
 class db_utils(object):
@@ -31,3 +32,9 @@ class db_utils(object):
 		cursor = connected.cursor()
 		cursor.execute(query)
 		connected.commit()
+	
+	# def checker(self):
+	# 	connected = self.doConnect()
+	# 	cur = connected.cursor(dictionary=True, buffered=True)
+	# 	results = cur.fetchall()
+	# 	return results
