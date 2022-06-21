@@ -8,17 +8,18 @@ mysql = db_utils()
 
 
 
-def POST_provider():
-    # val = "test2"
-    provider = request.form['provider']
-    data_insert = f"INSERT INTO Provider (name) VALUES ('{provider}');"
-    id = mysql.getData("SELECT id FROM Provider ORDER BY id DESC LIMIT 1;")
+def POST_truck():
 
-    mysql.setData(data_insert)
+    id_number = "10001"
+    provider = "something"
+    #data_insert = f"INSERT INTO Provider (name) VALUES ('{provider}');"
+
+    id = mysql.getData("SELECT EXISTS(SELECT * FROM Provider WHERE id=10000);")
+    #mysql.setData(data_insert)
     # return mysql.getData(f'select name,id from Provider where name = "{val}"')
     return json.dumps(id)
     
 
 
 if __name__ == '__main__':
-    POST_provider()    
+    POST_truck()    
