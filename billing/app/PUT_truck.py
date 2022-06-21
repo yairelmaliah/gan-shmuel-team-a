@@ -16,22 +16,20 @@ def id_check(where):
     value_id = str(y[-3])
     return value_id
 
-def PUT_truck():
 
-    license_plate = '134-33-443'
-    new_license_plate = '121-35-443'
+def PUT_truck(id):
+
+    license_plate = str(id)
+    new_id = request.args['provider_id']
+    
 
 
     if id_check(license_plate) != str(1):
         return (f"your truck id : {license_plate} is not exist! please try again.", 409)
 
     else:
-        if id_check(new_license_plate) != str(0):
-            return (f"your new truck id : {new_license_plate} is already exist! please try again.", 409)
-        else:
-            update_data = my_sql.updateData(f'UPDATE Trucks SET id = "{new_license_plate}" WHERE id ="{license_plate}";')
-            return(f"Enjoy! your old license plate : {license_plate} changed to {new_license_plate}!", 200)
-
+        my_sql.updateData(f'UPDATE `Trucks` SET provider_id = {new_id} WHERE id = "{license_plate}";')
+        return(f"Enjoy! your  license plate : {license_plate} changed provider id to {new_id}!", 200)
 
 
 if __name__ == '__main__':
