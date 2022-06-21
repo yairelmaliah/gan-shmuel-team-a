@@ -22,10 +22,10 @@ def push_new_provider():
 def POST_provider():
     try:
         if not data_exist():
-            return push_new_provider(), 200 # does not exist
-        return "Provider name already exist", 409 # exist
+            return push_new_provider(), 200 # does not exist, push new one!
+        return "Provider name already exist", 409 # exist, not allowed to push
     except:
-        return push_new_provider(), 200 # does not exist
+        return push_new_provider(), 200 # does not exist, push new one!
 
 
 if __name__ == '__main__':

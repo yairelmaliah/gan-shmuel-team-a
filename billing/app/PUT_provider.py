@@ -19,15 +19,13 @@ def update_new_provider(id):
     mysql.updateData(new_name)
     return f"Provider name changed, Id: {id}"
 
-
-
 def PUT_provider(id):
     try:
         if not data_exist():
-            return update_new_provider(id), 200 # does not exist
-        return f"Provider name already exist", 409 # exist
+            return update_new_provider(id), 200 # does not exist, change to new name!
+        return f"Provider name already exist", 409 # # exist, not allowed to change to new name
     except:
-        return update_new_provider(id), 200 # does not exist
+        return update_new_provider(id), 200 # does not exist, change to new name!
 
 
 if __name__ == '__main__':

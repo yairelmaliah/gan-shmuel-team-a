@@ -1,4 +1,3 @@
-from unittest import result
 import mysql.connector
 
 class db_utils(object):
