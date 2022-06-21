@@ -27,7 +27,6 @@ CREATE TABLE IF NOT EXISTS `containers_registered` (
 --
 
 
-
 CREATE TABLE IF NOT EXISTS `transactions` (
   `id` int(12) NOT NULL AUTO_INCREMENT,
   `datetime` datetime DEFAULT NULL,

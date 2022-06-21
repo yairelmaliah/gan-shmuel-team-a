@@ -2,7 +2,7 @@ from db import Mysql
 import os
 import csv
 
-def batch_weight(file):
+def batch_weight_handler(file):
   mysql = Mysql()
   query = """
             INSERT IGNORE INTO containers_registered 
