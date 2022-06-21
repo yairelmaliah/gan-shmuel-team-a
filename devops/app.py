@@ -1,5 +1,6 @@
 from flask import Flask , request
-
+import os
+import json
 
 app = Flask(__name__)
 
@@ -14,7 +15,18 @@ def health():
 
 @app.route('/webhook', methods = ['POST'])
 def webhook():
-    print(request.data)
+    # data = request.get_json()
+    # f = open('dump.txt', 'w')
+    # text = str(data)
+    # f.write(text)
+    # f.close()
+    #master_branch = (data['repository']['master_branch'])
+    #branch=(data['ref']).split("/")[-1]
+    os.system('cd ~/ganshmuel')
+    os.system('git pull origin devops')
+    os.system('cd devops')
+    os.system('docker build -t prod/gan:v1')
+
     return "OK", 200
 
 
