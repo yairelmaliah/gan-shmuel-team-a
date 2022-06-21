@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 from GET_health import GET_health
 from POST_provider import POST_provider
 from PUT_provider import PUT_provider
+from POST_truck import POST_truck
+from PUT_truck import PUT_truck
 import mysql.connector
 import time
 
@@ -48,6 +50,10 @@ def put_provider_id(id):
 @app.route("/api/provider/<id>/", methods=['GET'])
 def put_provider_render():
     return render_template('provider_id.html')
+    
+@app.route('/truck', methods=['POST'])
+def post_truck():
+    return POST_truck()
 
 @app.route("/provider/<int:id>")
 def provider_id(id):
@@ -55,6 +61,10 @@ def provider_id(id):
        return f'You are not allowed'
     else:
         return render_template('provider_id.html')
+
+@app.route('/truck/1000', methods=['PUT'])
+def put_truck():
+    return PUT_truck()
 
 
 if __name__ == '__main__':
