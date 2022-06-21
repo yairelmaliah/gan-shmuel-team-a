@@ -35,13 +35,34 @@ CREATE TABLE IF NOT EXISTS `Trucks` (
 -- Dumping data
 --
 
-/*
-INSERT INTO Provider (`name`) VALUES ('ALL'), ('pro1'),
-(3, 'pro2');
 
+INSERT INTO Provider (`name`) VALUES ('user1');
+INSERT INTO Provider (`name`) VALUES ('user2');
+INSERT INTO Provider (`name`) VALUES ('user3');
+INSERT INTO Provider (`name`) VALUES ('user4');
+INSERT INTO Provider (`name`) VALUES ('user5');
+INSERT INTO Provider (`name`) VALUES ('user6');
+INSERT INTO Provider (`name`) VALUES ('user7');
+INSERT INTO Provider (`name`) VALUES ('user8');
+INSERT INTO Provider (`name`) VALUES ('user9');
+INSERT INTO Provider (`name`) VALUES ('user10');
+
+
+
+INSERT INTO Trucks (`id`, `provider_id`) VALUES ('134-33-443', 10001);
+INSERT INTO Trucks (`id`, `provider_id`) VALUES ('155-34-443', 10002);
+INSERT INTO Trucks (`id`, `provider_id`) VALUES ('165-34-443', 10003);
+INSERT INTO Trucks (`id`, `provider_id`) VALUES ('176-34-443', 10004);
+INSERT INTO Trucks (`id`, `provider_id`) VALUES ('185-34-443', 10005);
+INSERT INTO Trucks (`id`, `provider_id`) VALUES ('195-37-443', 10006);
+INSERT INTO Trucks (`id`, `provider_id`) VALUES ('100-35-443', 10007);
+INSERT INTO Trucks (`id`, `provider_id`) VALUES ('200-32-443', 10008);
+INSERT INTO Trucks (`id`, `provider_id`) VALUES ('210-31-443', 10009);
+INSERT INTO Trucks (`id`, `provider_id`) VALUES ('220-30-443', 10010);
+
+
+
+/*
 INSERT INTO Rates (`product_id`, `rate`, `scope`) VALUES ('1', 2, 'ALL'),
 (2, 4, 'pro1');
-
-INSERT INTO Trucks (`id`, `provider_id`) VALUES ('134-33-443', 2),
-('222-33-111', 1);
-*/
+/*

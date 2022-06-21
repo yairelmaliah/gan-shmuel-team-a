@@ -18,7 +18,6 @@ def id_check(where):
 
 def PUT_truck():
 
-  #  provider_id = '10003'
     license_plate = '134-33-443'
     new_license_plate = '121-35-443'
 
