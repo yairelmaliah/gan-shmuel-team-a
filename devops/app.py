@@ -15,11 +15,11 @@ def health():
 
 @app.route('/webhook', methods = ['POST'])
 def webhook():
-    # data = request.get_json()
-    # f = open('dump.txt', 'w')
-    # text = str(data)
-    # f.write(text)
-    # f.close()
+    #data = request.get_json()
+    #f = open('dump.txt', 'w')
+    #text = str(data)
+    #f.write(text)
+    #f.close()
     #master_branch = (data['repository']['master_branch'])
     #branch=(data['ref']).split("/")[-1]
     os.system('cd ~/ganshmuel')
