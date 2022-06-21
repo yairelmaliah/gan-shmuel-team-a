@@ -26,9 +26,13 @@ def health():
     return GET_health()
 
 
-@app.route("/provider", methods=['POST'])
+@app.route("/api/provider", methods=['POST'])
 def post_provider():
     return POST_provider()
+
+@app.route('/provider')
+def provider():
+    return render_template('provider.html')
 
 
 @app.route("/provider/<id>", methods=['PUT'])

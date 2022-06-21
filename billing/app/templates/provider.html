@@ -1,0 +1,39 @@
+<html>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      function room() {
+        var room = window.location.href.substring(window.location.href.lastIndexOf('/')+1);
+        return "/api/"+room;
+      }
+  
+      function updateChat() {
+        $.get(room(),function(data) {
+          $("#chatbox").text(data);
+          window.setTimeout(updateChat,15000);
+        })
+      }
+  
+      function sendmessage() {
+        $.post( room(), $( "#inform" ).serialize() );
+      }
+  
+      $(document).ready(function() {
+        $("#chatbox").text("Loading Providers...");
+        $("#sendBtn").click(sendmessage)
+        window.setTimeout(updateChat,15000);
+      });
+  
+    </script>
+    <head>
+      <!-- <link rel="stylesheet" href="{{url_for('static',filename='styles/style.css')}}"> -->
+    </head>
+    <body>
+    <div class="contentBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray">
+        <h3>Enter new provider: </h3>
+      <form id="inform" action="/api/provider.html" method="POST">
+        <input name="provider" type=text >
+        <input id="sendBtn" type="button" value="submit">
+      </form>
+        </div>
+    </body>
+  </html>
