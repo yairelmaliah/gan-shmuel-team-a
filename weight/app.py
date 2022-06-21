@@ -14,4 +14,4 @@ def health():
 # def health():
 #   return render_template("index.html") , 200
 
-app.run(host="0.0.0.0",port=3000, debug=True)
+app.run(host="0.0.0.0",port=8081, debug=True)
