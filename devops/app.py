@@ -22,7 +22,7 @@ def webhook():
     #f.close()
     #master_branch = (data['repository']['master_branch'])
     #branch=(data['ref']).split("/")[-1]
-    os.system('cd ~/ganshmuel')
+    os.system('cd ~/gan-shmuel-team-a')
     os.system('git pull origin devops')
     os.system('cd devops')
     os.system('docker build -t prod/gan:v1')
@@ -31,4 +31,5 @@ def webhook():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8082, debug=True)
+

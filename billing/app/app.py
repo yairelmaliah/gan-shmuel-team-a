@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from GET_health import GET_health
 from POST_provider import POST_provider
+from POST_truck import POST_truck
 import mysql.connector
 import time
 
@@ -26,16 +27,22 @@ def health():
     return GET_health()
 
 
-@app.route("/provider", methods=['POST'])
+@app.route("/api/provider", methods=['POST'])
 def post_provider():
     return POST_provider()
+
+@app.route('/provider')
+def provider():
+    return render_template('provider.html')
 
 
 @app.route("/provider/<id>", methods=['PUT'])
 def put_provider_id():
     pass
 
-
+@app.route('/truck', methods=['POST'])
+def post_truck():
+    return POST_truck()
 
 
 if __name__ == '__main__':
