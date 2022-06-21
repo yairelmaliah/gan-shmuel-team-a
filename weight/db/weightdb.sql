@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS `containers_registered` (
 -- Table structure for table `transactions`
 --
 
+
+
 CREATE TABLE IF NOT EXISTS `transactions` (
   `id` int(12) NOT NULL AUTO_INCREMENT,
   `datetime` datetime DEFAULT NULL,
@@ -45,8 +47,21 @@ show tables;
 describe containers_registered;
 describe transactions;
 
+DROP TABLE IF EXISTS `trucks`;
+CREATE TABLE `trucks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `truckid` varchar(45) NOT NULL,
+  `weight` float DEFAULT NULL,
+  `unit` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+INSERT INTO trucks (truckid,weight,unit) VALUES ('77777',666,'lbs');
+INSERT INTO trucks (truckid,weight,unit) VALUES ('66666',120,'kg');
+INSERT INTO trucks (truckid,weight,unit) VALUES ('99888',999,'lbs');
+INSERT INTO trucks (truckid,weight,unit) VALUES ('66321',741,'kg');
+INSERT INTO trucks (truckid,weight,unit) VALUES ('12365',854,'lbs');
 --
 -- Dumping data for table `test`
 --
