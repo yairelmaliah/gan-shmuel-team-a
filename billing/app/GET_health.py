@@ -1,22 +1,35 @@
 import requests
 from time import sleep 
+
+
 def GET_health(url):
+
+      new = ""
+
       try:
-            url = [f'http://localhost:5000/{url}']
+            url = [f'http://localhost:8080/{url}']
             #Get Url
             get = requests.get(url[0])
             # if the request succeeds 
             if get.status_code == 200:
                print(f"{url}: is reachable")
-               return 1
+               new = (f"{url}: is reachable")
+
+               #return 1
             else:
                print(f"{url}: is Not reachable, status_code: {get.status_code}")
-               return 0
+               new = (f"{url}: is Not reachable, status_code: {get.status_code}")
+
+               #return 0
+      
 
       #Exception
       except requests.exceptions.RequestException as e:
          # print URL with Errs
          raise SystemExit(f"{url}: is Not reachable \nErr: {e}")
+      finally:
+     
+         return new
 
 # def GET_health(url):
 #    #  urlname = ['health', 'provider', 'rates', 'truck']
@@ -37,8 +50,8 @@ def GET_health(url):
 
 if __name__ == '__main__':   
    # GET_health()
-   urlname = ['health', 'provider','rates','aaa']
-   for url in urlname:
-      sleep(1)
+   #urlname = ['','home', 'provider','rates','truck','not_real_valid']
+  # for url in urlname:
+    #  sleep(1)
       GET_health(url)
     
