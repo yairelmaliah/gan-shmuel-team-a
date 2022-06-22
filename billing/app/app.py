@@ -4,6 +4,8 @@ from POST_provider import POST_provider
 from PUT_provider import PUT_provider
 from POST_truck import POST_truck
 from PUT_truck import PUT_truck
+from POST_rates import POST_rates
+
 import mysql.connector
 import time
 
@@ -92,12 +94,24 @@ def get_truck_id():
     return render_template('index.html')
 
 
+
+#### RATES ####
+
+@app.route("/api/rates/<file>", methods=['POST'])
+def rates(file):
+   return POST_rates(file)
+
+@app.route("/api/rates/<file>")
+def rates_web():
+    return render_template('index.html')
+
 ##### API FOR WEIGHT ####
 
 
 @app.route("/api/information", methods=['GET'])
 def get_information():
     return get_information()
+
 
 if __name__ == '__main__':
     # billingdb = mysql.connector.connect(
