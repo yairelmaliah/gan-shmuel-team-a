@@ -23,3 +23,4 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `produce` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10001 ;
+

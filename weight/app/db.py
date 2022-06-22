@@ -19,10 +19,10 @@ class Mysql():
     mycursor.execute(query, data)
     connected.commit()
 	
-  def update_data(self, query):
+  def update_data(self, query, data=None):
     connected = self.connect_to_db()
     mycursor = connected.cursor()
-    mycursor.execute(query)
+    mycursor.execute(query, data)
     connected.commit()
 
   def get_data(self, query):
