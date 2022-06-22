@@ -8,7 +8,7 @@ services:
       - 5000:3306
     volumes:
       - ./db:/docker-entrypoint-initdb.d
-      - mysql-billing-data:/var/lib/mysql
+    #  - mysql-billing-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: 12345
 
@@ -17,7 +17,7 @@ services:
     restart: always
 
     volumes:
-      - ./in:/in
+      - ./in:/src/in
       - ./app:/src/app
     build: .
     ports:
