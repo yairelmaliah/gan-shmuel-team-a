@@ -21,9 +21,7 @@ def GET_truck(id):
 
 
     license_plate = str(id)
-  #  from_date = request.args['from']
-   # to_date = request.args['to']
-    
+  
     id_check = my_sql.getData(f'SELECT EXISTS(SELECT * FROM `Trucks` WHERE id="{license_plate}");')
     dump = json.dumps(id_check)
     value = str(dump[-3])
@@ -45,6 +43,8 @@ def GET_truck(id):
         from_date = currentDT.strftime("%Y%m01000000")
         to_date = currentDT.strftime("%Y%m%d%H%M%S")
 
+
+   
 
 
 
