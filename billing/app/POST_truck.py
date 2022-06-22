@@ -7,23 +7,34 @@ from flask import Flask, render_template, request
 import json
 from db_utils import db_utils
 
-
 my_sql = db_utils()
 
 
 
 def POST_truck():
 
-    provider_id = '10003'
-    truck_id = '134-35-443'
-
-    id = my_sql.getData(f'SELECT EXISTS(SELECT * FROM Provider WHERE id={provider_id});')
+    # provider_id = request.form['provider_id']
+    # truck_id = request.form['truck_license']
+    provider_id = request.args['provider_id']
+    truck_id = request.args['truck_id']
+    
+  #  provider_id = str(10010)
+  #  truck_id = str('134-34-443')
+    id = my_sql.getData(f'SELECT EXISTS(SELECT * FROM Provider WHERE id="{provider_id}");')
     x = json.dumps(id)
     value = str(x[-3])
+
+  #  check_provider_id = my_sql.getData(f'SELECT EXISTS(SELECT * FROM Trucks WHERE provider_id={provider_id});')
+  #  b = json.dumps(check_provider_id)
+  #  val_provider_id = str(b[-3])
 
     if value == str(0):
         return (f"Provider id : {provider_id} not found, please try again.", 409)
     
+    
+    #elif val_provider_id == str(1):
+       # return (f"Provider id : {provider_id} already have a truck id, please try again.", 409)
+
     else:
 
        id_check = my_sql.getData(f'SELECT EXISTS(SELECT * FROM Trucks WHERE id="{truck_id}");')

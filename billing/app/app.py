@@ -28,6 +28,7 @@ def index():
 def health():
     return GET_health()
 
+########### Providers #############
 
 @app.route("/api/provider", methods=['POST'])
 def post_provider():
@@ -43,28 +44,53 @@ def provider():
     # return POST_provider()
 
 
-@app.route("/api/provider/<id>", methods=['PUT'])
+@app.route("/api/provider/<id>/", methods=['PUT'])
 def put_provider_id(id):
         return PUT_provider(id)
 
 @app.route("/api/provider/<id>/", methods=['GET'])
 def put_provider_render():
     return render_template('provider_id.html')
+    
 
 @app.route("/provider/<int:id>")
 def provider_id(id):
     if id < 10001:
-       return f'You are not allowed - Id does not exist'
+       return f'You are not allowed'
     else:
         return render_template('provider_id.html')
-    
-@app.route('/truck', methods=['POST'])
+
+
+
+######## Trucks #############
+
+@app.route("/api/truck", methods=['POST'])
 def post_truck():
     return POST_truck()
 
-@app.route('/truck/1000', methods=['PUT'])
-def put_truck():
-    return PUT_truck()
+
+@app.route("/api/truck", methods=['GET'])
+def post_truck_render():
+    return render_template('truck.html')
+
+@app.route("/truck/")
+def truck():
+    return render_template('truck.html')
+
+
+@app.route('/truck/<id>/', methods=['PUT'])
+def put_truck(id):
+        return PUT_truck(id)
+
+
+@app.route("/api/truck/<id>/", methods=['GET'])
+def get_truck_id_render():
+    return render_template('index.html')
+
+@app.route("/truck/<id>/")
+def get_truck_id():
+    return render_template('index.html')
+
 
 
 if __name__ == '__main__':
