@@ -35,13 +35,15 @@ def test():
   functions = [test_health, test_get_unknown, test_get_item, test_batch_weight, test_get_weight]
   for func in functions:
     if not func():
-      return f"ERROR ==> {func.__name__}"
+      sys.exit(0)
 
-  return "SUCCESS"
+  sys.exit(1)
+
 
 if __name__ == '__main__':
   try:
-    print(test())
+    test()
   except Exception as e:
+    sys.exit(0)
     print(f"SERVER ERROR!!!")
 
