@@ -88,8 +88,8 @@ def put_truck(id):
 
 
 @app.route("/api/truck/<id>/", methods=['GET'])
-def get_truck_id(id):
-    return render_template('index.html')
+def get_api_truck_id(id):
+    return GET_truck(id)
 
 
 @app.route("/api/truck/<id>/", methods=['GET'])
