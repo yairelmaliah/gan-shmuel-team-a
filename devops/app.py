@@ -1,8 +1,22 @@
 from flask import Flask , request
 import os
-import json
+import shutil
+from config import *
+
 
 app = Flask(__name__)
+
+def build_app(data):
+
+    branch_name = data['ref'].split('/')[-1]
+
+    if os.path.isdir(PATH_TEST):
+        shutil.rmtree(PATH_TEST)
+    os.mkdir(PATH_TEST)
+    os.chdir(PATH_TEST)
+    os.system(f'git clone -b {branch_name} --single-branch {REPO}')
+    os.system(f'docker-compose -f /home/develeap/bootcamp/Gan-Shmuel-Project/gan-shmuel-team-a/{branch_name}/docker-compose.yaml up --build -d')
+
 
 @app.route('/', methods = ['GET'])
 def home():
@@ -15,18 +29,9 @@ def health():
 
 @app.route('/webhook', methods = ['POST'])
 def webhook():
-    #data = request.get_json()
-    #f = open('dump.txt', 'w')
-    #text = str(data)
-    #f.write(text)
-    #f.close()
-    #master_branch = (data['repository']['master_branch'])
-    #branch=(data['ref']).split("/")[-1]
-    os.system('cd ~/gan-shmuel-team-a')
-    os.system('git pull origin devops')
-    os.system('cd devops')
-    os.system('docker build -t prod/gan:v1')
-
+    data = request.get_json()
+    print(data)
+    build_app(data)
     return "OK", 200
 
 
