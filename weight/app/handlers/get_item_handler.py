@@ -20,6 +20,7 @@ def get_item_handler(args,_id):
   if info:
     return json.dumps({
       "id": _id,
+      "direction": info[0][2],
       "tara": info[-1][6],
       "transactions": [x[0] for x in info]
     })

@@ -33,7 +33,7 @@ def post_weight_handler(args):
   check_syntax(direction, unit)
 
   time_now = time.strftime('%Y%m%d%H%M%S')
-  
+  print(time_now, flush=True)
   # Check if theres already a truck/container session
   query = f"SELECT id,direction FROM `transactions` WHERE truck = {truck} order by datetime desc limit 1"
   exist_session = mysql.get_data(query)
@@ -159,7 +159,7 @@ def insert_in_session(time, truck, containers, weight, produce):
 
   session_id = mysql.get_data(f'SELECT id from transactions WHERE truck = {truck} order by datetime desc limit 1')
   session_id = session_id[0][0]
-  request.post()
+  # request.post()
   return json.dumps({ "id": session_id, "truck": truck,"bruto": weight })
 
 
