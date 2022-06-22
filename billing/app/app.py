@@ -4,6 +4,7 @@ from POST_provider import POST_provider
 from PUT_provider import PUT_provider
 from POST_truck import POST_truck
 from PUT_truck import PUT_truck
+from GET_truck import GET_truck
 from POST_rates import POST_rates
 from GET_rates import GET_rates
 
@@ -87,8 +88,13 @@ def put_truck(id):
 
 
 @app.route("/api/truck/<id>/", methods=['GET'])
-def get_truck_id_render():
+def get_truck_id(id):
     return render_template('index.html')
+
+
+@app.route("/api/truck/<id>/", methods=['GET'])
+def get_truck_id_render(id):
+    return GET_truck(id)
 
 @app.route("/truck/<id>/")
 def get_truck_id():

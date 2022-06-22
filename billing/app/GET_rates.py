@@ -1,10 +1,7 @@
 from re import X
 from flask import Flask, render_template, request
-import json
 from db_utils import db_utils
 from openpyxl import Workbook, load_workbook
-import os
-from urllib import request
 import shutil
 
 mysql = db_utils()
@@ -17,11 +14,12 @@ def GET_rates():
     file_name = f.read()
     f.close()
 
-    original = f'/src/in/{file_name}'
 
+    original = f'/src/in/{file_name}'
     target = r'/src/in/last_rate_file.xlsx'
+
     shutil.copyfile(original, target)
-    return "Your Newest rates is in your /in file in the name : last_rate_file.xlsx"
+    return ("Your Newest rates is in your /in file in the name : last_rate_file.xlsx" , 200)
 
     
 if __name__ == '__main__':
