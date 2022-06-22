@@ -31,7 +31,3 @@ class Mysql():
     mycursor.execute(query)
     results = mycursor.fetchall()
     return results
-    
-    # mycursor = mydb.cursor()
-    # mycursor.execute("SELECT * FROM customers")
-    # myresult = mycursor.fetchall()
