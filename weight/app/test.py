@@ -1,4 +1,5 @@
 import requests
+import sys
 
 def test_health():
   req = requests.get("http://localhost:8081/health")
