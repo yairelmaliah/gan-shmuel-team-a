@@ -10,5 +10,9 @@ services:
     image: mysql:5.7
     volumes:
       - ./db:/docker-entrypoint-initdb.d
+      - mysql-data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=1234
+
+volumes:
+  mysql-data:

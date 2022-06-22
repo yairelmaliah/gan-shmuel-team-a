@@ -1,10 +1,51 @@
 from db import Mysql
 import time
 import json
-
+from flask import abort
 mysql = Mysql()
 
+directions_to_use = { "in","out","none"}
+weight_unit_to_use = {"kg","lbs"}
+
+def check_syntax(direction, weight_unit, containers, weight, produce, truck):
+    if direction not in directions_to_use:
+        abort(400, "direction {} doesn't exist".format(direction))
+
+    if weight_unit not in weight_unit_to_use:
+        abort(400, "weight unit {} doesn't exist".format(weight_unit))
+
+    if direction == "in" and not containers:
+      abort(400, "must insert containers")
+
+    if not weight:
+      abort(400, "must insert weight")
+    
+    if direction == "in" and not produce:
+      abort(400, "must insert produce")
+
+    if not truck:
+      abort(400, "must insert truck license plate")
+
 def post_weight_handler(args):
+
+  check_syntax(
+    args.get('direction'),
+    args.get('unit'), 
+    args.get('containers'),
+    args.get('weight'),
+    args.get('produce'),
+    args.get('truck')
+    )
+    
+  # print(args.get('direction'),flush=True)
+  # print(args.get('truck'),flush=True)
+  # print(args.get('containers'),flush=True)
+  # print(args.get('weight'),flush=True)
+  # print(args.get('unit'),flush=True)
+  # print(args.get('force'),flush=True)
+  # print(args.get('produce'), flush=True)
+  # return "sadassad"
+
   direction = args.get('direction')
   truck = args.get('truck')
   containers = args.get('containers').split(",")

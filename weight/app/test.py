@@ -19,7 +19,7 @@ def test_get_item():
   else: return 1
 
 def test_batch_weight():
-  req = requests.get("http://localhost:8081/batch_weight/containers3.json")
+  req = requests.post("http://localhost:8081/batch_weight/containers3.json")
   status_code = req.status_code
   if (status_code < 200 or status_code > 299): return 0
   else: return 1
@@ -31,6 +31,8 @@ def test_get_weight():
   else: return 1
 
 if __name__ == '__main__':
+  arr = [test_health, test_get_unknown, test_get_item, test_batch_weight, test_get_weight]
+  
   if test_health() and test_get_unknown() and test_get_item() and test_batch_weight() and test_get_weight():
     print("OK")
   else:
