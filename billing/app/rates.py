@@ -10,8 +10,8 @@ mysql = db_utils()
 
 def rates_handler():
   # file_name=request.args['file']
-  file_name = "rates.xlsx"
-  wrkbk = load_workbook(f"../in/{file_name}")
+  file_name = os.path.basename("")
+  wrkbk = load_workbook(f"in/rates.xlsx")
   sheet = wrkbk.active
   row = sheet.max_row
   column = sheet.max_column
@@ -22,10 +22,15 @@ def rates_handler():
     if  i == 1:
       pass
     else:
-     data = mysql.getData(f'SELECT EXISTS(SELECT * FROM Rates WHERE product_id="{product_id}" AND scope = "{scope}");')
-     print(json.dumps(data)) 
+      print(product_id.value)
+     # data = mysql.getData(f'SELECT EXISTS(SELECT * FROM Rates WHERE product_id="{product_id}" AND scope = "{scope}");')
+     # print(json.dumps(data)) 
+     # print(i)
       
 
 
+if __name__ == '__main__':
+    rates_handler()
 
-rates_handler()  
+
+

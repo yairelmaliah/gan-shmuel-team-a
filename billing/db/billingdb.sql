@@ -63,4 +63,7 @@ INSERT INTO Trucks (`id`, `provider_id`) VALUES ('220-30-443', 10010);
 
 
 
-INSERT INTO Rates (`product_id`, `rate`, `scope`) VALUES ('1', 2, 'ALL'),(2, 4, 'pro1');
+INSERT INTO Rates (`product_id`, `rate`, `scope`) VALUES ('Navel', 90, 'ALL');
+INSERT INTO Rates (`product_id`, `rate`, `scope`) VALUES ('Mandarin', 130, 'ALL');
+INSERT INTO Rates (`product_id`, `rate`, `scope`) VALUES ('Tangerine', 90, 'ALL');
+INSERT INTO Rates (`product_id`, `rate`, `scope`) VALUES ('Mandarin', 20, '45');
