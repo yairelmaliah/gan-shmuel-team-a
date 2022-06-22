@@ -18,6 +18,12 @@ class Mysql():
     mycursor = connected.cursor()
     mycursor.execute(query, data)
     connected.commit()
+	
+  def update_data(self, query):
+    connected = self.connect_to_db()
+    mycursor = connected.cursor()
+    mycursor.execute(query)
+    connected.commit()
 
   def get_data(self, query):
     connected = self.connect_to_db()
@@ -25,7 +31,3 @@ class Mysql():
     mycursor.execute(query)
     results = mycursor.fetchall()
     return results
-    
-    # mycursor = mydb.cursor()
-    # mycursor.execute("SELECT * FROM customers")
-    # myresult = mycursor.fetchall()
