@@ -16,7 +16,7 @@ services:
     restart: always
 
     volumes:
-      - ./in:/in
+      - ./in:/src/in
       - ./app:/src/app
     build: .
     ports:
