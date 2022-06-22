@@ -92,6 +92,12 @@ def get_truck_id():
     return render_template('index.html')
 
 
+##### API FOR WEIGHT ####
+
+
+@app.route("/api/information", methods=['GET'])
+def get_information():
+    return get_information()
 
 if __name__ == '__main__':
     # billingdb = mysql.connector.connect(
