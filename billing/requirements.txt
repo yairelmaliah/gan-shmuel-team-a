@@ -6,3 +6,4 @@ Werkzeug==2.1.2
 mysql-connector-python
 requests
 openpyxl
+urllib

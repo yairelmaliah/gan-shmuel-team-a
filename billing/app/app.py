@@ -5,6 +5,7 @@ from PUT_provider import PUT_provider
 from POST_truck import POST_truck
 from PUT_truck import PUT_truck
 from POST_rates import POST_rates
+from GET_rates import GET_rates
 
 import mysql.connector
 import time
@@ -104,6 +105,18 @@ def rates(file):
 @app.route("/api/rates/<file>")
 def rates_web():
     return render_template('index.html')
+
+
+
+@app.route("/api/rates", methods=['GET'])
+def get_rates():
+   return GET_rates()
+
+
+@app.route("/api/rates")
+def get_rates_web():
+    return render_template('index.html')
+
 
 ##### API FOR WEIGHT ####
 

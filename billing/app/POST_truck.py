@@ -18,8 +18,7 @@ def POST_truck():
     provider_id = request.args['provider_id']
     truck_id = request.args['truck_id']
     
-  #  provider_id = str(10010)
-  #  truck_id = str('134-34-443')
+  
     id = my_sql.getData(f'SELECT EXISTS(SELECT * FROM Provider WHERE id="{provider_id}");')
     x = json.dumps(id)
     value = str(x[-3])
