@@ -27,7 +27,6 @@ def POST_provider():
     except:
         return push_new_provider(), 200 # does not exist, push new one!
 
-
 if __name__ == '__main__':
     POST_provider()
     data_exist()
