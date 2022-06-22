@@ -3,7 +3,10 @@
     <script>
       function room() {
         var room = window.location.href.substring(window.location.href.lastIndexOf('/')+1);
-        return "/api/"+room;
+        // if (provid) {
+        //   return room
+        // }
+        return "/provider/"+room;
       }
       // async function makeRequest() {
       //     try {
@@ -48,6 +51,8 @@
       function updateChat() {
         $.get(room(),function(data) {
           $("#chatbox").text(data);
+          // $("#provid").text("Your about to update id: " + room(provid) + " Please enter new name:");
+
           window.setTimeout(updateChat,15000);
         })
       }
@@ -57,7 +62,7 @@
       }
   
       $(document).ready(function() {
-        $("#chatbox").text("Loading Providers...");
+        // $("#chatbox").text("Loading Providers...");
         $("#sendBtn").click(sendmessage)
         // $("#sendBtn").click(makeRequestt)
         
@@ -70,15 +75,16 @@
     </head>
     <body>
     <nav class="navigation">
-      <a class="NavUpdateProvider" href="http://localhost:5000/provider_id">Update Provider</a>
+      <a class="NavUpdateProvider" href="http://localhost:5000/provider">Enter new provider</a>
 
     </nav>
     <div class="contentBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray">
-        <h3>Enter new provider: </h3>
-      <form id="inform" action="/api/provider.html" method="POST">
+      <h1 id="provid">Loading providers...</h1>
+      <form id="inform" action="/api/provider.html" method="PUT">
         <input name="provider" type=text >
         <input id="sendBtn" type="button" value="submit">
       </form>
+      <!-- <pre id="chatbox">Loading...</pre> -->
       <p id="exist"></p>
     </div>
     </body>

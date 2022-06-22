@@ -5,22 +5,19 @@ services:
   billing_db: 
     image: mysql:8.0.26
     ports:
-      - "3306"
+      - 5000:3306
     volumes:
       - ./db:/docker-entrypoint-initdb.d
+      # - mysql-billing-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: 12345
-    # healthcheck:
-    #         test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost:3306"]
-    #         timeout: 20s
-    #         retries: 10
+
 
   billing_app:
     restart: always
-    # volumes:
-    #   - ${DYNAMIC_PATH_APP}/rates:/in
-    # hostname: billingapp
+
     volumes:
+      - ./in:/src/in
       - ./app:/src/app
     build: .
     ports:
