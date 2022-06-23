@@ -30,7 +30,8 @@ def index():
 
 @app.route("/health", methods=['GET','POST'])
 def health():
-    return GET_health()
+    return "ok", 200
+    # return GET_health()
 
 ########### Providers #############
 
