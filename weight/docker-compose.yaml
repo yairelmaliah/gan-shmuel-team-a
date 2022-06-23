@@ -1,6 +1,6 @@
 version: '3'
 services:
-  weight_app_2:
+  weight_app:
     build: ./app
   sql:
     image: mysql:5.7

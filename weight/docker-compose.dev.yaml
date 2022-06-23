@@ -1,6 +1,6 @@
 version: '3'
 services:
-  weight_app_2:
+  weight_app:
     volumes:
       - ./app:/app
     ports:
