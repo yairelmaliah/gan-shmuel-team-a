@@ -4,6 +4,8 @@ services:
     build: ./app
     ports:
       - "8083:8081"
+    environment: 
+      TEST_DB: "true"
   sql_test:
     image: mysql:5.7
     volumes:
@@ -14,3 +16,5 @@ services:
 
 volumes:
   mysql-data:
+
+# docker-compose -f docker-compose.test.yaml up --build
