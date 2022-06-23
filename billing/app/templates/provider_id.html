@@ -1,0 +1,96 @@
+<html>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      function room() {
+        var room = window.location.href.substring(window.location.href.lastIndexOf('/')+1);
+        // if (provid) {
+        //   return room
+        // }
+        return "/provider/"+room;
+      }
+      // async function makeRequest() {
+      //     try {
+      //         const response = await fetch('http://localhost:5000/provider');
+
+      //         console.log('response.status: ', response.status); // 👉️ 200
+      //         console.log(response);
+      //         if (response.status === 200) {
+      //           // $("#exist").text("enter name");
+      //         }
+      //         else if (response.status === 409) {
+      //           console.log("baba")
+      //           $("#exist").text("Provider name is already exist");
+      //         }
+
+      //     } catch (err) {
+      //         console.log(err);
+      //     }
+      // }
+      // async function makeRequestt() {
+      //     try {
+      //         const response = await fetch('http://localhost:5000/api/provider');
+
+      //         console.log('response.status: ', response.status); // 👉️ 200
+      //         console.log(response);
+      //         if (response.status === 200) {
+      //           $("#exist").text("creating...");
+      //         }
+      //         else if (response.status === 405) {
+      //           console.log("baba")
+      //           $("#exist").text("Provider name is already exist");
+      //         }
+      //         else if (response.status === 409) {
+      //           console.log("baba")
+      //           $("#exist").text("Provider name is already exist");
+      //         }
+
+      //     } catch (err) {
+      //         console.log(err);
+      //     }
+      // }
+      function updateChat() {
+        $.get(room(),function(data) {
+          $("#chatbox").text(data);
+          // $("#provid").text("Your about to update id: " + room(provid) + " Please enter new name:");
+
+          window.setTimeout(updateChat,15000);
+        })
+      }
+  
+      function sendmessage() {
+        $.post( room(), $( "#inform" ).serialize());
+      }
+  
+      $(document).ready(function() {
+        // $("#chatbox").text("Loading Providers...");
+        $("#sendBtn").click(sendmessage)
+        // $("#sendBtn").click(makeRequestt)
+        
+        window.setTimeout(updateChat,15000);
+      });
+  
+    </script>
+    <head>
+      <!-- <link rel="stylesheet" href="{{url_for('static',filename='styles/style.css')}}"> -->
+    </head>
+    <body>
+      <nav class="headNev">
+        <a class="headNevLink1" href="/">  <i>Index</i></a>
+        <a class="headNevLink2" href="/health">Health </a>
+        <a class="headNevLink1" href="/provider">Enter new provider</a>
+        <a class="headNevLink1" href="/provider_id">update provider</a>
+        <a class="headNevLink2" href="/rates">Rates</a>
+        <a class="headNevLink1" href="/truck">Trucks </a>
+        <a class="headNevLink2" href="/bills">Bills </a>
+    </nav>
+    <div class="contentBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray">
+      <h1 id="provid">Loading providers...</h1>
+      <form id="inform" action="/api/provider.html" method="PUT">
+        <input name="provider" type=text >
+        <input id="sendBtn" type="button" value="submit">
+      </form>
+      <!-- <pre id="chatbox">Loading...</pre> -->
+      <p id="exist"></p>
+    </div>
+    </body>
+  </html>

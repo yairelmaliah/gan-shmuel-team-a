@@ -3,5 +3,9 @@ version: '3'
 services:
   app:
     build: .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+     # - /home/${USER}/Gan-Shmuel-Project/gan-shmuel-team-a/app:/ganshmuel/app
+     # - /home/${USER}/Gan-Shmuel-Project/gan-shmuel-team-a/test:/ganshmuel/test
     ports:
-    - "8080:8080"
+    - "8082:8082"
