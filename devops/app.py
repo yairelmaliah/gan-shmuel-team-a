@@ -11,7 +11,9 @@ def build_app(data):
     branch_name = data['ref'].split('/')[-1]
     pusher_github_name = data["pusher"]["name"]
     os.system('rm -rf /tmp/gan-shmuel-app')
+
     # os.system(f'git clone -b {branch_name} --single-branch {REPO} /tmp/gan-shmuel-app')
+
     os.system(f'git clone -b {branch_name} --single-branch {REPO} /tmp/gan-shmuel-app')
     # Run tests:
     test_results = run_test(branch_name)

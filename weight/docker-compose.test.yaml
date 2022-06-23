@@ -1,8 +1,10 @@
 version: '3'
 services:
-  weight_app:
+  weight_app_test:
     build: ./app
-  sql:
+    ports:
+      - "8083:8081"
+  sql_test:
     image: mysql:5.7
     volumes:
       - mysql-data:/var/lib/mysql

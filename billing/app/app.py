@@ -20,7 +20,6 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-
 @app.route("/health", methods=['GET','POST'])
 def health():
     return "OK", 200
@@ -33,9 +32,6 @@ def health_web():
 @app.route("/api/health")
 def api_web_health():
     return render_template(index.html)
-
-
-
 
 
 

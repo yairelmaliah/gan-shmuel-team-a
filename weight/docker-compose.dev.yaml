@@ -1,9 +1,9 @@
 version: '3'
 services:
-  billing_app:
+  weight_app:
     volumes:
-      - ./app:/src/app
+      - ./app:/app
     ports:
-      - 5000:5000
+      - "3000:8081"
 
 # docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml up --build
