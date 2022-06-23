@@ -1,25 +1,17 @@
 version: '3'
-
 services:
-
   billing_db: 
     image: mysql:8.0.26
-    # ports:
-    #   - 5000:3306
     volumes:
       - ./db:/docker-entrypoint-initdb.d
-      # - mysql-billing-data:/var/lib/mysql
+      - mysql-billing-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: 12345
-
-
   billing_app:
     restart: always
     volumes:
       - ./in:/src/in
-      - ./app:/src/app
     build: .
-    ports:
-      - 8080:5000
-    depends_on:
-      - "billing_db"
+
+volumes:
+  mysql-billing-data:

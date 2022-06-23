@@ -16,8 +16,8 @@ def build_app(data):
     test_results = run_test(branch_name)
 
     print("=====================================", flush=True)
-    print(test_results, "", flush=True)
-    print("=====================================" flush=True)
+    print(test_results, flush=True)
+    print("=====================================" ,flush=True)
     return "ok"
     os.system(f'docker-compose -f /home/develeap/bootcamp/Gan-Shmuel-Project/gan-shmuel-team-a/{branch_name}/docker-compose.yaml up --build -d')
 
@@ -33,21 +33,14 @@ def build_app(data):
 def home():
     return "OK", 200
 
-
 @app.route('/health', methods = ['GET'])
 def health():
-    return "OK", 200
+    return "OK changed", 200
 
 @app.route('/webhook', methods = ['POST'])
 def webhook():
     data = request.get_json()
     print(data,flush= True)
-    try:
-        with open("github-webhook-data.txt", "a") as f:
-            f.writelines(data)
-    except:
-        print("CANT READ TO FILE",flush= True)
-    
     build_app(data)
     
     return "OK", 200
