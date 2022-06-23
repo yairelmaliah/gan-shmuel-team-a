@@ -7,9 +7,11 @@ if "dev" in sys.argv:
   url = "http://localhost:3000"
 if "test" in sys.argv:
   url = "http://3.66.68.27:8083"
+if "prod" in sys.argv:
+  url = "http://3.66.68.27:8081"
 
 if not url:
-  sys.stdout.write('You must specify what environment you are in, dev||prod, eg. "python3 testing.py dev"')
+  sys.stdout.write('You must specify what environment you are in, dev OR test OR prod, eg. "python3 testing.py dev"')
   exit(0)
 
 def test_health():
