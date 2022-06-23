@@ -39,8 +39,11 @@ def post_weight_handler(args):
   exist_session = mysql.get_data(query)
   
 
-  if exist_session and exist_session[0][1] == direction:
-    
+  if exist_session and (exist_session[0][1] == direction or direction == "none"):
+
+    if exist_session[0][1] == "in":
+      abort(400, f"Not possible to insert none after in -> caused by {truck}")
+
     if force == "false": abort(400, f"Error in direction -> caused by {truck}")
 
     if force == "true":
@@ -64,7 +67,12 @@ def check_if_truck_exist(truck):
   query = f"""
           SELECT * from transactions WHERE truck = {truck}"""
   data = mysql.get_data(query)
-  if not data:
+  query1 = f"""
+          SELECT direction from transactions WHERE truck = {truck} ORDER BY id DESC LIMIT 1"""
+  data1 = mysql.get_data(query1)  
+  
+  
+  if not data or data1[0][0] == "none":
     return False
   return True
 
