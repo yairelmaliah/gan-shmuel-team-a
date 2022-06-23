@@ -1,7 +1,16 @@
 version: '3'
 services:
-  weight_app_2:
+  weight_app_test:
+    build: ./app
     ports:
       - "8083:8081"
+  sql:
+    image: mysql:5.7
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
 
-# docker-compose -f docker-compose.yaml -f docker-compose.test.yaml up --build
+volumes:
+  mysql-data:

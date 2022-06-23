@@ -1,8 +1,21 @@
 version: '3'
-
 services:
-  billing_app:
+  billing_db:
     ports:
       - 8084:5000
+    image: mysql:8.0.26
+    volumes:
+      - mysql-billing-data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+  billing_app_test:
+    restart: always
+    volumes:
+      - ./in:/src/in
+    build: .
 
-# docker-compose -f docker-compose.yaml -f docker-compose.test.yaml up --build
+volumes:
+  mysql-billing-data:
+
+# docker-compose -f docker-compose.test.yaml up --build
