@@ -15,3 +15,7 @@ services:
 
 volumes:
   mysql-billing-data:
+
+# - /home/${USER}/mysql-data:/var/lib/mysql
+# FLASK_APP=app.py
+# FLASK_ENV=development

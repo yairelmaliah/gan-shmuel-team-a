@@ -1,5 +1,6 @@
 import requests
 from time import sleep
+import sys
 
 # Please run the script : "python3 testing.py" in order to check all apis
 # *******
@@ -20,7 +21,16 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-url = "http://3.66.68.27:8084"
+url = ""
+
+if "dev" in sys.argv:
+  url = "http://localhost:5000"
+if "test" in sys.argv:
+  url = "http://3.66.68.27:8084"
+  
+if not url:
+  sys.stdout.write('You must specify what environment you are in, dev||prod, eg. "python3 testing.py dev"')
+  exit(0)
 
 def test_health():
   req = requests.get(f"{url}/health")
@@ -113,7 +123,14 @@ def test_get_rates():
     return 1
 
 
+def test():
+  functions = [test_health, test_post_provider, test_put_provider, test_post_truck, test_put_truck, test_post_rates, test_get_rates]
+  for func in functions:
+    if not func():
+      sys.stdout.write(f'ERROR ==> {func.__name__}')
+    sleep(0.2)
+
+  sys.stdout.write('SUCCESS')
+
 if __name__ == '__main__':
-    for func in [test_health, test_post_provider, test_put_provider, test_post_truck, test_put_truck, test_post_rates, test_get_rates]:
-        sleep(0.2)
-        result = func() # Looping through list of functions in a function
+  test()
