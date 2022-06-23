@@ -1,8 +1,13 @@
 import mysql.connector
+import os
 
 class Mysql():
   def __init__(self):
-    self.host="sql",
+    if not os.environ.get("TEST_DB",None):
+      self.host = "sql"
+    else: 
+      self.host = "sql_test"
+
     self.user="root",
     self.password="1234",
     self.database="weight"
@@ -10,7 +15,7 @@ class Mysql():
 
   def connect_to_db(self):
     if self.connected is None:
-      self.connected = mysql.connector.connect(host="sql",user="root",password="1234",database="weight")
+      self.connected = mysql.connector.connect(host=self.host,user="root",password="1234",database="weight")
     return self.connected
 
   def insert_data(self,query, data):
