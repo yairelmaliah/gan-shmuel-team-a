@@ -5,6 +5,7 @@ services:
     build: .
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/app
      # - /home/${USER}/Gan-Shmuel-Project/gan-shmuel-team-a/app:/ganshmuel/app
      # - /home/${USER}/Gan-Shmuel-Project/gan-shmuel-team-a/test:/ganshmuel/test
     ports:

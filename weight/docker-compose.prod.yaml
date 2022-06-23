@@ -1,0 +1,7 @@
+version: '3'
+services:
+  weight_app_2:
+    ports:
+      - "8081:8081"
+
+# docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up --build

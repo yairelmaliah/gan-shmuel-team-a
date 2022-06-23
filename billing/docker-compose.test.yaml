@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  billing_app:
+    ports:
+      - 8084:5000
+
+# docker-compose -f docker-compose.yaml -f docker-compose.test.yaml up --build

@@ -1,0 +1,9 @@
+version: '3'
+services:
+  weight_app_2:
+    volumes:
+      - ./app:/app
+    ports:
+      - "3000:8081"
+
+# docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml up --build
