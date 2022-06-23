@@ -24,12 +24,12 @@ def GET_truck(id):
 
     currentDT = datetime.datetime.now()
     license_plate = str(id)
-    id_check = my_sql.getData(f'SELECT EXISTS(SELECT * FROM `Trucks` WHERE id="{license_plate}");')
-    dump = json.dumps(id_check)
-    value = str(dump[-3])
+    # id_check = my_sql.getData(f'SELECT EXISTS(SELECT * FROM `Trucks` WHERE id="{license_plate}");')
+    # dump = json.dumps(id_check)
+    # value = str(dump[-3])
     
-    if value == str(0):
-        return (f"License plate : {license_plate} is not exist!, please try again.", 404)
+    # if value == str(0):
+    #     return (f"License plate : {license_plate} is not exist!, please try again.", 404)
 
     try:
         from_date = request.args['from']
@@ -46,34 +46,17 @@ def GET_truck(id):
         to_date = currentDT.strftime("%Y%m%d%H%M%S")
 
      #localhost:8080/truck/135-43-132?from=20220311 203010&to=20220312 203010
-   # http://localhost:8081/get_item/10006
- #   try :
-  #  sleep (2)
 
-    # i=0
-    # not_found=True
-    # while i < 30 and not_found:
-    #     try:
+    provider_id_check = my_sql.getData(f"SELECT provider_id FROM Trucks WHERE id='{license_plate}';")
+    provider_id = str(provider_id_check[0]['provider_id'])
+    return provider_id
+
+   # data = requests.get(f"http://3.66.68.27:8081/item/'{license_plate}'?from'{from_date}'to'{to_date}'").json()
+
+   # new_data = data['id'] = provider_id
    
 
-
-    data = request.get_json("http://3.66.68.27:8080/api/provider")
-
-
-    return jsonify({'you sent ':data})
-
-    dump = json.dumps(res)
-    data = json.loads(dump)
-    return str(data)
-    #         not_found = False
-    #  #   ba = "laal"
-    #     except ConnectionError:
-    #         sleep(2)
-    #         i += 1
-
-    
-
-   # return res
+   # return new_data
     
 
 if __name__ == '__main__':
