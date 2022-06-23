@@ -20,7 +20,7 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-url = "http://localhost:8080"
+url = "http://3.66.68.27:8084"
 
 def test_health():
   req = requests.get(f"{url}/health")

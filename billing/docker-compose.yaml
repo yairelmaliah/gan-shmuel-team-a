@@ -3,8 +3,8 @@ services:
   billing_db: 
     image: mysql:8.0.26
     volumes:
-      - ./db:/docker-entrypoint-initdb.d
       - mysql-billing-data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: 12345
   billing_app:
