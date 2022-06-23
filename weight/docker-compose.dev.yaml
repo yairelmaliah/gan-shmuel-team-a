@@ -5,3 +5,5 @@ services:
       - ./app:/app
     ports:
       - "3000:8081"
+
+# docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml up --build
