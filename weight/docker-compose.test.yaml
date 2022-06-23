@@ -1,0 +1,5 @@
+version: '3'
+services:
+  weight_app:
+    ports:
+      - "8083:8081"
