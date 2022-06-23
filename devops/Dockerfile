@@ -1,7 +1,14 @@
-FROM python:3.9-alpine
+FROM python:3.8-alpine
 WORKDIR /app
 COPY ./requirements.txt .
+RUN apk get update \
+    && apk add --no-cache git \
+    && apk add --no-cache docker \
+    && apk add docker-compose 
 RUN pip install -r requirements.txt
+RUN pip install requests
+RUN mkdir /test && cd /test && git clone -b weight --single-branch https://github.com/yairelmaliah/gan-shmuel-team-a.git
+WORKDIR /app
 COPY . .
 ENTRYPOINT [ "python3" ]
 CMD [ "app.py" ]
