@@ -45,8 +45,8 @@ def GET_truck(id):
         from_date = currentDT.strftime("%Y%m01000000")
         to_date = currentDT.strftime("%Y%m%d%H%M%S")
 
-     #localhost:8080/truck/135-43-132?from=20220311 203010&to=20220312 203010
-   # http://localhost:8081/get_item/10006
+     #3.66.68.27:8080/truck/135-43-132?from=20220311 203010&to=20220312 203010
+   # http://3.66.68.27:8081/get_item/10006
  #   try :
   #  sleep (2)
 

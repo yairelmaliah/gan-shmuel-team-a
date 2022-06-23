@@ -7,7 +7,7 @@ def GET_health(url):
       new = ""
 
       try:
-            url = [f'http://localhost:8080/{url}']
+            url = [f'http://3.66.68.27:8080/{url}']
             #Get Url
             get = requests.get(url[0])
             # if the request succeeds 
