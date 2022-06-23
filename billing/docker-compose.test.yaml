@@ -1,6 +1,6 @@
 version: '3'
 services:
-  billing_db:
+  billing_db_test:
     ports:
       - 8084:5000
     image: mysql:8.0.26
