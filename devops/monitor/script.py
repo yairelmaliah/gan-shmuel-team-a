@@ -1,86 +1,24 @@
-import socket
+import requests
 
 def checking(checking_result, f):
-    if checking_result == 0:
+    if checking_result == 200:
         f.write("opened\n")
     else:
         f.write("closed\n")
 
-
-def portstatus():
+def portstatus(dev):
+    url = "http://3.66.68.27"
+    ports = [8080, 8081, 8082, 8083, 8084]
+    ports = [8081]
+    if dev:
+        url = "http://localhost"
+        ports = [3000, 5000]
     open('open_ports.txt', 'w').close()
     f = open('open_ports.txt', 'a')
-    #8080
-    a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    location = ("3.66.68.27",8080)
-    checking_result = a_socket.connect_ex(location)
-
-    checking(checking_result, f)
-
-    a_socket.close()
     
-    #8081
-    a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    location = ("3.66.68.27",8081)
-    checking_result = a_socket.connect_ex(location)
-
-    checking(checking_result, f)
-
-    a_socket.close()
-
-    #8082
-    a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    location = ("3.66.68.27",8082)
-    checking_result = a_socket.connect_ex(location)
-
-    checking(checking_result, f)
-
-    a_socket.close()
-
-    #8083
-    a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    location = ("3.66.68.27",8083)
-    checking_result = a_socket.connect_ex(location)
-
-    checking(checking_result, f)
-
-    a_socket.close()
-
-    #8084
-    a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    location = ("3.66.68.27",8084)
-    checking_result = a_socket.connect_ex(location)
-
-    checking(checking_result, f)
-
-    a_socket.close()
-
-    #8085
-    a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    location = ("3.66.68.27",8085)
-    checking_result = a_socket.connect_ex(location)
-
-    checking(checking_result, f)
-
-    a_socket.close()
-
-    #8086
-    a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    location = ("3.66.68.27",8086)
-    checking_result = a_socket.connect_ex(location)
-
-    checking(checking_result, f)
-
-    a_socket.close()
-
+    for p in ports:
+        status_code = requests.get(f"{url}:{p}/health").status_code
+        checking(status_code, f)
+    
     f.close()
-
-
-portstatus()
+    

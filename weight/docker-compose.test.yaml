@@ -9,12 +9,12 @@ services:
   sql_test:
     image: mysql:5.7
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-weight-data-test:/var/lib/mysql
       - ./db:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_ROOT_PASSWORD=1234
 
 volumes:
-  mysql-data:
+  mysql-weight-data-test:
 
 # docker-compose -f docker-compose.test.yaml up --build

@@ -4,7 +4,7 @@ import sys
 url = ""
 
 if "dev" in sys.argv:
-  url = "http://localhost:5000"
+  url = "http://localhost:3000"
 if "test" in sys.argv:
   url = "http://3.66.68.27:8083"
 

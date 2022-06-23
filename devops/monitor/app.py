@@ -1,10 +1,17 @@
 from flask import Flask, render_template
 from script import *
+import sys
 app = Flask(__name__)
+
+
+dev = False
+
+if "dev" in sys.argv:
+  dev = True
 
 @app.route("/monitor")
 def monitor():
-    portstatus()
+    portstatus(dev)
     return render_template('index.html')
 
 @app.route("/monitor/openports.txt")
@@ -14,4 +21,4 @@ def ports():
     return contents
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0",port=8085, debug=True)

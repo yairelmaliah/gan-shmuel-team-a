@@ -5,10 +5,10 @@ services:
   sql:
     image: mysql:5.7
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-weight-data:/var/lib/mysql
       - ./db:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_ROOT_PASSWORD=1234
 
 volumes:
-  mysql-data:
+  mysql-weight-data:
