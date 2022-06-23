@@ -1,5 +1,6 @@
 import requests
-
+import sys
+# 3.66.68.27
 def test_health():
   req = requests.get("http://localhost:8081/health")
   status_code = req.status_code
@@ -35,13 +36,16 @@ def test():
   functions = [test_health, test_get_unknown, test_get_item, test_batch_weight, test_get_weight]
   for func in functions:
     if not func():
-      return f"ERROR ==> {func.__name__}"
+      sys.stdout.write('ERROR')
 
-  return "SUCCESS"
+  sys.stdout.write('SUCCESS')
+
+
+
 
 if __name__ == '__main__':
   try:
-    print(test())
+    test()
   except Exception as e:
-    print(f"SERVER ERROR!!!")
+    sys.stdout.write('ERROR')
 
