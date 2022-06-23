@@ -1,14 +1,25 @@
+from cgi import test
 from flask import Flask , request
 import os
 import shutil
 from config import *
-
+from run_tests import run_test
 
 app = Flask(__name__)
 
 def build_app(data):
-
     branch_name = data['ref'].split('/')[-1]
+    pusher_github_name = data["pusher"]["name"]
+    os.system('rm -rf /tmp/gan-shmuel-app')
+    os.system(f'git clone -b {branch_name} --single-branch {REPO} /tmp/gan-shmuel-app')
+    # Run tests:
+    test_results = run_test(branch_name)
+
+    print("=====================================", flush=True)
+    print(test_results, "", flush=True)
+    print("=====================================" flush=True)
+    return "ok"
+    os.system(f'docker-compose -f /home/develeap/bootcamp/Gan-Shmuel-Project/gan-shmuel-team-a/{branch_name}/docker-compose.yaml up --build -d')
 
     if os.path.isdir(PATH_TEST):
         shutil.rmtree(PATH_TEST)
@@ -30,8 +41,15 @@ def health():
 @app.route('/webhook', methods = ['POST'])
 def webhook():
     data = request.get_json()
-    print(data)
+    print(data,flush= True)
+    try:
+        with open("github-webhook-data.txt", "a") as f:
+            f.writelines(data)
+    except:
+        print("CANT READ TO FILE",flush= True)
+    
     build_app(data)
+    
     return "OK", 200
 
 

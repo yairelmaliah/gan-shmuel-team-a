@@ -4,8 +4,8 @@ services:
 
   billing_db: 
     image: mysql:8.0.26
-    ports:
-      - 5000:3306
+    # ports:
+    #   - 5000:3306
     volumes:
       - ./db:/docker-entrypoint-initdb.d
       # - mysql-billing-data:/var/lib/mysql
@@ -15,7 +15,6 @@ services:
 
   billing_app:
     restart: always
-
     volumes:
       - ./in:/src/in
       - ./app:/src/app
