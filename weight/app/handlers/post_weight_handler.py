@@ -37,6 +37,7 @@ def post_weight_handler(args):
   # Check if theres already a truck/container session
   query = f"SELECT id,direction FROM `transactions` WHERE truck = {truck} order by datetime desc limit 1"
   exist_session = mysql.get_data(query)
+  
 
   if exist_session and exist_session[0][1] == direction:
     
@@ -51,23 +52,39 @@ def post_weight_handler(args):
 
   if direction == "in" or direction == "none":
     check_if_container_exist_and_insert(containers)
-    return insert_in_session(time_now, truck, containers, weight, produce)
+    return insert_in_session(time_now, direction, truck, containers, weight, produce)
 
   if direction == "out":
-    return insert_out_session(time_now, truck, containers, weight, produce)
+    if check_if_truck_exist(truck):
+        return insert_out_session(time_now, truck, containers, weight, produce)
+    abort(400, f"truck {truck} never entered Gan Shmouel")
   return "SUCCESS"
 
+def check_if_truck_exist(truck):
+  query = f"""
+          SELECT * from transactions WHERE truck = {truck}"""
+  data = mysql.get_data(query)
+  if not data:
+    return False
+  return True
+
+
+
 def check_if_container_exist_and_insert(containers):
+  
+  containers= containers.split(",")
+  
   for container in containers:
     query = f"""
             SELECT * from containers_registered WHERE container_id = "{container}"
             """
     data = mysql.get_data(query)
-
+    
     if not data:
       query = """INSERT IGNORE INTO containers_registered (container_id) VALUES (%s)"""
       data = (container,)
       mysql.insert_data(query, data)
+
 
 
 def insert_out_session(time, truck, containers , weight, produce):
@@ -76,19 +93,27 @@ def insert_out_session(time, truck, containers , weight, produce):
   bruto = transaction_data[0][0]
   produce = transaction_data[0][2]
   total_containers_weight = 0
+  flag=False
 
   for container in containers:
     query = f"""
             SELECT weight from containers_registered WHERE container_id = "{container}"
               """ 
     cont_data = mysql.get_data(query)
-    if cont_data:
+    
+    if cont_data[0][0] != None:
+
       if cont_data[0][0]:
         total_containers_weight += cont_data[0][0]
+    else:
+      flag=True
+      
+  if not flag:
+    neto = bruto - total_containers_weight - int(weight)
+  else:
+    neto=None
 
-  neto = bruto - total_containers_weight - int(weight)
-
-  query = """INSERT INTO transactions (datetime, direction, truck, containers, bruto, truckTara ,neto,produce)
+  query = """INSERT INTO transactions (datetime, direction, truck, containers, bruto, truckTara , neto, produce)
               VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"""
 
   data = (time, "out", truck, ",".join(containers),bruto, weight, neto, produce)
@@ -146,15 +171,17 @@ def update_in_session(id, time, truck, containers, weight, produce):
         produce = %s
         WHERE `id` = %s
         """
-  mysql.update_data(query, (time, "in", truck, containers, weight, produce,))
+  mysql.update_data(query, (time, "in", truck, containers, weight, produce,id))
   return json.dumps({ "id": get_new_session_id(id), "truck": truck,"bruto": weight })
 
-def insert_in_session(time, truck, containers, weight, produce):
+def insert_in_session(time, direction, truck, containers, weight, produce):
+  
   query = """
         INSERT INTO transactions 
-        (datetime, direction, truck, containers, bruto,produce) VALUES (%s,%s,%s,%s,%s,%s)
+        (datetime, direction, truck, containers, bruto, produce) VALUES (%s,%s,%s,%s,%s,%s)
         """
-  data = (time, "in", truck, ",".join(containers), weight, produce)
+  containers = containers.split(",")
+  data = (time, direction, truck, ",".join(containers), weight, produce)
   mysql.insert_data(query, data)
 
   session_id = mysql.get_data(f'SELECT id from transactions WHERE truck = {truck} order by datetime desc limit 1')
@@ -167,3 +194,8 @@ def get_new_session_id(_id):
   session_id = mysql.get_data(f'SELECT `id` from transactions WHERE `id` = {_id}')
   session_id = session_id[0][0]
   return session_id
+
+
+
+
+  #",".join(containers)
