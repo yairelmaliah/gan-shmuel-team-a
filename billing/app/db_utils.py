@@ -1,16 +1,20 @@
 import mysql.connector
+import os
 
 class db_utils(object):
 	def __init__(self):
 		self.db_user = "root"
 		self.db_pass = "12345"
-		self.db_host = "billing_db"
+		if not os.environ.get("TEST_DB",None):
+			self.db_host = "billing_db"
+		else: 
+			self.db_host = "billing_db_test"
 		self.db_name = "billdb"
 		self.connections = None
 
 	def doConnect(self):
 		if self.connections is None:
-			self.connections = mysql.connector.connect(user='root', password='12345', host='billing_db', database='billdb')
+			self.connections = mysql.connector.connect(user='root', password='12345', host=self.db_host, database='billdb')
 		return self.connections
 
 	def getData(self,query):
@@ -33,8 +37,3 @@ class db_utils(object):
 		cursor.execute(query)
 		connected.commit()
 	
-	# def checker(self):
-	# 	connected = self.doConnect()
-	# 	cur = connected.cursor(dictionary=True, buffered=True)
-	# 	results = cur.fetchall()
-	# 	return results

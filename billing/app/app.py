@@ -23,7 +23,7 @@ def index():
 
 @app.route("/health", methods=['GET','POST'])
 def health():
-    return health_check()
+    return "OK", 200
 
 @app.route("/health")
 def health_web():
