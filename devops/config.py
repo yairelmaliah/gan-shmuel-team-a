@@ -1,65 +1,49 @@
-import os
-
-DYNAMIC_PATH = str(os.environ.get('DYNAMIC_PATH'))
 REPO = 'https://github.com/yairelmaliah/gan-shmuel-team-a.git'
-SUCCESS_CODE = 0
-FAILURE_CODE = 1
 
-PATH_APP = '/gan-shmuel-team-a/app'
-PATH_TEST = '/home/develeap/bootcamp/Gan-Shmuel-Project/test'
-WEIGHT='Weight'
-BILLING='Billing'
-DEVOPS='Devops'
-BRANCHES_ALLOWED = [ 'devops', 'weight', 'billing' ]
+BRANCHES_ALLOWED = ['weight', 'billing']
 
-DOCKER_COMPOSE_PATHS = { 
-  'weight': '/weight/docker-compose.yaml',
-  'billing': '/billing/docker-compose.yaml'
-}
-APPS_DB_PATHS = {
-  'weight': DYNAMIC_PATH + 'app/weight-staging/weight',
-  'billing': DYNAMIC_PATH + 'app/billing-staging/billing'
-}
-
-APPS_PATHS = {
-  'weight': DYNAMIC_PATH + 'app/weight-staging/weight',
-  'billing': DYNAMIC_PATH + 'app/billing-staging/billing'
-}
-
-TEST_APPS_DB_PATHS = {
-  'weight': DYNAMIC_PATH + 'test/weight-staging/weight',
-  'billing': DYNAMIC_PATH + 'test/billing-staging/billing'
-}
-
-TEST_APPS_PATHS = {
-  'weight': DYNAMIC_PATH + 'test/weight-staging/weight',
-  'billing': DYNAMIC_PATH + 'test/billing-staging/billing'
-}
-HEADING_SUCCESS = 'team tests success'
-MESSAGE_SUCCESS = 'All tests passed successfully!'
-HEADING_FAILURE = 'team tests failure'
-MESSAGE_FAILURE = 'Some tests have failed. Please check!'
-
-HEADING_SUCCESS_DEPLOY = 'team deploy success'
-MESSAGE_SUCCESS_DEPLOY = 'System has been deployed successfully! System is running and operational.'
-HEADING_FAILURE_DEPLOY = 'team deploy failure'
-MESSAGE_FAILURE_DEPLOY = 'System was not deployed successfully. Please check!'
+SENDER_EMAIL = 'develeapblueteum@gmail.com'
+PASSWORD = 'cehjgdpczgllgyzs'
+SERVER_NAME = 'smtp.gmail.com'
+SERVER_PORT = 587
 
 CONTACT_EMAILS = {
     "weight_team": {
-        "yair": "yairelmaliah319732@gmail.com"
+        "team_leader": "yairelmaliah",
+        "team_members": {
+            "yairelmaliah": "yairelmaliah319732@gmail.com",
+            "davidab265": "",
+            "Gologolo97": "lejbgolovaty@yahoo.com"
+        }
     },
 
     "billing_team": {
-        "rotem": "kalmanrotem@gmail.com"
+        "team_leader": "RotemK1",
+        "team_members": {
+            "RotemK1": "kalmanrotem@gmail.com",
+            "asi111": "",
+            "oshriza": ""
+        }
     },
 
     "devops_team": {
-        "ori": "orimeyuhas@gmail.com"
+        "team_leader": "OriMeyuhas",
+        "team_members": {
+            "OriMeyuhas": "orimeyuhas@gmail.com",
+            "yairelmaliah": "yairelmaliah319732@gmail.com",
+            "adelwa": "adelw@post.bgu.ac.il",
+            "evra3": "abrahem.mhajnee@gmail.com",
+            "RotemHaim6": ""
+        }
     }
 }
 
-SWITCHER_STAGING_WEIGHT=1
-SWITCHER_STAGING_BILLING=1
-SWITCHER_MAIN_BILLING=1
-SWITCHER_MAIN_WEIGHT=1    
+HEADING_SUCCESS = 'All tests passed successfully!'
+HEADING_FAILURE = 'Some tests have failed. Please check!'
+
+TEST_TMP_PATH = "/tmp/gan-shmuel-app"
+
+TEST_CONTAINERS_NAMES = {
+    "weight": "weight_app_test sql_test",
+    "billing": "billing_db_test billing_app_test",
+}
