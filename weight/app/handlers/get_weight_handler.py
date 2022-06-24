@@ -13,7 +13,7 @@ def get_weight_handler(args):
     fromTime = '{:<14d}'.format(int(fromTime))
     toTime = '{:<14d}'.format(int(toTime))
 
-    query = f"select id,datetime, direction,containers, bruto, neto, produce from transactions where direction in {filter_directions} order by datetime desc"
+    query = f"select id,datetime, direction,containers, bruto, neto, produce,truck from transactions where direction in {filter_directions} order by datetime desc"
     data = mysql.get_data(query)
     arr = []
 
@@ -23,6 +23,7 @@ def get_weight_handler(args):
         arr.append({
           "id": trans[0],
           "direction": trans[2],
+          "truck": trans[7],
           "bruto": trans[4],
           "neto": trans[5],
           "produce": trans[6],
