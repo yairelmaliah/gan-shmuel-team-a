@@ -28,6 +28,10 @@ def GET_truck(id):
     try:
         from_date = request.args['from']
         to_date = request.args['to']
+
+        if from_date > to_date:
+            return("from date is larger than to date. please try again.", 409)
+
         if len(from_date) != 14 or from_date.isnumeric() == False:
             return (f"from_date is not valid, please try again.", 409)
 

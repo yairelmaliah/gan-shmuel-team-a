@@ -42,7 +42,7 @@ def GET_bill(id):
         if len(from_date) != 14 or from_date.isnumeric() == False:
             return (f"from_date is not valid, please try again.", 409)
 
-        elif len(to_date) != 14 or from_date.isnumeric() == False:
+        elif len(to_date) != 14 or to_date.isnumeric() == False:
             return ("to_date is not valid, please try again.", 409)
 
     except :
@@ -60,17 +60,17 @@ def GET_bill(id):
 
 
     licenses = list(my_sql.getData(f'SELECT id FROM Trucks WHERE provider_id={provider_id};'))
+    truck_count = len(licenses)
 
-    
-#     truck_count = 0
-#     items = []
- 
-#     for one in licenses:
-#         truck_count += 1
-#         plate = one['id']
+    # truck_count = 0
+    # items = []
+
+    # for one in licenses:
+    #     truck_count += 1
+    #     plate = one['id']
         
-#       # license_list += {one['id']}
-#         items.append(requests.get(f"http://localhost:5000/item/{plate}?from{from_date}to{to_date}").json())
+    #     license_list += {one['id']}
+    #     items.append(requests.get(f"http://3.66.68.27:8081/item/{plate}?from{from_date}to{to_date}").json())
 
 
 #     #return str(items)
@@ -99,44 +99,34 @@ def GET_bill(id):
 
     truckCount=0
     total=0
-    result_arr = licenses
-
+    
     #We expect to get a json array for all trucks that went out
     #headers = {"Accept": "application/json"}
-    weighted_containers = requests.get(f"http://3.66.68.27:8081/weight?from={from_date}to={to_date}&filter=out").json()
-    
-    return weighted_containers
-    
-    print(a[0], flush=True)
-    return "asdsadsad"
-    #weighted_containers = requests.get("http://3.66.68.27:8081/weight?from=20210122190746to=20230722190746&filter=out")
-
-    #return weighted_containers.text
-    #weighted_containers = "[(10002, 'out', 'C-3123', 5000, None, 'Blood'), (10005, 'out', 'C-7123', 5000, None, 'Mandarin'), (10006, 'out', 'C-8123', 5000, None, 'Navel'), (10008, 'out', 'C-3123', 5000, None, 'Tangerine')]"
-    text = BeautifulSoup(weighted_containers.text, features="html.parser").prettify()
-    print(json.loads(text), flush=True)
-
-    print(weighted_containers.json(), flush=True)
-    
-    return "dfsfsdfd"
-    
-    
-
-    #trey = ''.join(test)
-    print(weighted_containers.text[1], flush=True)
-    return "x"
+    #http://3.66.68.27:8081/weight?from=20220311203010&to=20220711203010&filter=out
+    weighted_containers = requests.get(f"http://3.66.68.27:8081/weight?from={from_date}&to={to_date}&filter=out").json()
+    weighted_containers = json.dumps(weighted_containers)
+    weighted_containers = json.loads(weighted_containers)
+    #print(type(weighted_containers['data']), flush=True)
+    #return weighted_containers
     #TODO Number of sessions for each product
     #TODO Get total weight of each product
 
     providers_sessions = []
-
+  #  print(weighted_containers['data'][0])
     #Get all sessions that are specific to this provider
-    for truck in weighted_containers:
-        for truck_id in result_arr:
-            LOG(truck['id'],LOG_TYPE.INFO)
+    for truck in weighted_containers['data']:
+        print(f"truck {truck}", flush=True)
+        for truck_id in licenses:
+            print(f"truck id : {truck_id}", flush=True)
+            print(f"truck_id 2 : {truck['truck']}", flush=True)
             if truck['id'] == truck_id:
+                
+                print(truck['id'], flush=True)
                 providers_sessions.append(truck)
-
+ #   print(providers_sessions, flush=True)
+    return "x"
+    print(providers_sessions,flush=True)
+    return str(providers_sessions)
     providers_products=[]
 
     for truck in providers_sessions:
