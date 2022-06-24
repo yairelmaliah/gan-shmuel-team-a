@@ -4,7 +4,7 @@ services:
     image: mysql:8.0.26
     volumes:
       - mysql-billing-data-test:/var/lib/mysql
-      - ./db:/docker-entrypoint-initdb.d
+      - ./db/billingdb.sql:/docker-entrypoint-initdb.d/billingdb.sql
     environment:
       MYSQL_ROOT_PASSWORD: 12345
     container_name: billing_db_test
@@ -21,6 +21,11 @@ services:
     container_name: billing_app_test
 
 volumes:
-  mysql-billing-data-test:
+  mysql-billing-data-test-2:
+
 
 # docker-compose -f docker-compose.test.yaml up --build
+
+
+
+
