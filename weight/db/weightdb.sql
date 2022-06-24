@@ -25,11 +25,11 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 ) ENGINE=MyISAM AUTO_INCREMENT=10001 ;
 
 
-INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'in', '155-34-443', 'C-3123', 5000, 'Blood');
-INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'out','155-34-443', 'C-3123', 5000, 'Blood');
-INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'in', '165-34-443', 'C-7123', 5000, 'Mandarin');
-INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'in', '195-37-443', 'C-8123', 5000, 'Navel');
-INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'out', '165-34-443', 'C-7123', 5000, 'Mandarin');
-INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'out', '195-37-443', 'C-8123', 5000, 'Navel');
-INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'in', '200-32-443', 'C-3123', 5000, 'Tangerine');
-INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'out', '200-32-443', 'C-3123', 5000, 'Tangerine');
+INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'in', '155-34-443', 'C-1', 5000, 'Blood');
+INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'out','155-34-443', '', 1500, 'Blood');
+INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'in', '165-34-443', 'C-2,C-3', 8777, 'Mandarin');
+INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'out', '165-34-443', 'C-2', 2000, 'Mandarin');
+INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'in', '195-37-443', 'C-4', 3000, 'Navel');
+INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'out', '195-37-443', '', 800, 'Navel');
+INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622190746, 'in', '200-32-443', 'C-5,C-6', 4444, 'Tangerine');
+INSERT INTO transactions (datetime, direction, truck, containers, bruto, produce) VALUES(20220622160746, 'out', '200-32-443', 'C-6', 632, 'Tangerine');
