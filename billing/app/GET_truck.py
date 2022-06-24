@@ -25,6 +25,7 @@ def GET_truck(id):
     currentDT = datetime.datetime.now()
     license_plate = str(id)
 
+
     try:
         from_date = request.args['from']
         to_date = request.args['to']
@@ -57,7 +58,14 @@ def GET_truck(id):
     load = json.loads(dump)
     provider_id = str(load[0]['provider_id'])
 
-    data = requests.get(f"http://3.66.68.27:8081/item/{license_plate}?from'{from_date}'to'{to_date}'").json()
+
+    try:
+        data = requests.get(f"http://3.66.68.27:8081/item/{license_plate}?from'{from_date}'to'{to_date}'").json()
+
+    except requests.exceptions.JSONDecodeError:
+                return (f"license plate : {license_plate} does not have sessions for those dates.")
+
+
     data['id'] = provider_id
 
 
