@@ -3,30 +3,17 @@ import requests
 from flask import request
 import json
 from db_utils import db_utils
-import datetime
+from datetime import datetime
 #import werkzeug
-from requests import Session
-from requests.adapters import HTTPAdapter
-from requests.exceptions import ConnectionError
-from enum import Enum
-class LOG_TYPE(Enum):
-    INFO=0
-    ERROR=1
-    WARNING=2
 
-type_desc = ["[INFO]","[ERROR]","[WARNING]"]
-def LOG(str,TYPE):
-    datObj = datetime.now()
-    with open("log","a+") as f:
-        f.write(f'[{datObj}] {type_desc[TYPE.value]} {str}\n')
 
 my_sql = db_utils()
 
    
 def GET_bill(id):
 
-     
-    currentDT = datetime.datetime.now()
+ ##################################### check data ####################################    
+    currentDT = datetime.now()
     provider_id = str(id)
   
     id_check = my_sql.getData(f'SELECT EXISTS(SELECT * FROM `Provider` WHERE id="{provider_id}");')
@@ -37,18 +24,24 @@ def GET_bill(id):
         return (f"Provider id : {provider_id} is not exist!, please try again.", 404)
 
     try:
+
         from_date = request.args['from']
         to_date = request.args['to']
+
+        if from_date > to_date:
+            return("from date is larger than to date. please try again.", 409)
+
         if len(from_date) != 14 or from_date.isnumeric() == False:
             return (f"from_date is not valid, please try again.", 409)
 
-        elif len(to_date) != 14 or from_date.isnumeric() == False:
+        elif len(to_date) != 14 or to_date.isnumeric() == False:
             return ("to_date is not valid, please try again.", 409)
 
     except :
 
         from_date = currentDT.strftime("%Y%m01000000")
         to_date = currentDT.strftime("%Y%m%d%H%M%S")
+
 
 
     is_exists = my_sql.getData(f"SELECT EXISTS(SELECT id FROM Trucks WHERE provider_id='{provider_id}');")
@@ -59,116 +52,93 @@ def GET_bill(id):
         return (f"Provider id : {provider_id} does not have a license plate, please try again.", 404)
 
 
+##################################  CHECKING DATA ##############################
+
+
     licenses = list(my_sql.getData(f'SELECT id FROM Trucks WHERE provider_id={provider_id};'))
 
     
-#     truck_count = 0
-#     items = []
- 
-#     for one in licenses:
-#         truck_count += 1
-#         plate = one['id']
-        
-#       # license_list += {one['id']}
-#         items.append(requests.get(f"http://localhost:5000/item/{plate}?from{from_date}to{to_date}").json())
+    data_name = (my_sql.getData(f"""SELECT name FROM Provider WHERE id='{provider_id}';"""))
+    t = json.dumps(data_name)
+    d = json.loads(t)
+    provider_name = d[0]['name']
 
 
-#     #return str(items)
+    weighted_containers = requests.get(f"http://3.66.68.27:8081/weight?from={from_date}&to={to_date}&filter=out").json()
+    weighted_containers = json.dumps(weighted_containers)
+    weighted_containers = json.loads(weighted_containers)
 
-    
-#    # http://3.66.68.27:8081/weight?from=20220122190746to=20220722190746&filter=out
-    
-#     weighted_containers = requests.get(f"http://3.66.68.27:8081/weight?from=20210122190746to=20230722190746&filter=out")
 
-#     providers_sessions = []
-
-#     #Get all sessions that are specific to this provider
-#     for truck in weighted_containers:
-#         for truck_id in licenses:
-#             #LOG(truck['id'],LOG_TYPE.INFO)
-#             if truck['id'] == truck_id:
-#                 providers_sessions.append(truck)
-
-#     #return int(1)
-#     #requests.get(f"http://localhost:5000/item/{license_plate}?from{from_date}to{to_date}").json()
-
-    # d = requests.get(f"http://localhost:5000/weight/{license_plate}?from{from_date}to{to_date}").json()
-
-  
-    name = ""
-
-    truckCount=0
     total=0
-    result_arr = licenses
+    truck_count = len(licenses)
+    session_count = 0
 
-    #We expect to get a json array for all trucks that went out
-    #headers = {"Accept": "application/json"}
-    weighted_containers = requests.get(f"http://3.66.68.27:8081/weight?from={from_date}to={to_date}&filter=out").json()
-  
-    return weighted_containers
+
+    sessions = []
+    for truck in weighted_containers['data']:
+        for truck_id in licenses:
+            if truck['truck'] == str(truck_id['id']):
+                sessions.append(truck)
+                session_count += 1
+
     
-    print(a[0], flush=True)
-    return "asdsadsad"
-    #weighted_containers = requests.get("http://3.66.68.27:8081/weight?from=20210122190746to=20230722190746&filter=out")
-
-    #return weighted_containers.text
-    #weighted_containers = "[(10002, 'out', 'C-3123', 5000, None, 'Blood'), (10005, 'out', 'C-7123', 5000, None, 'Mandarin'), (10006, 'out', 'C-8123', 5000, None, 'Navel'), (10008, 'out', 'C-3123', 5000, None, 'Tangerine')]"
-    text = BeautifulSoup(weighted_containers.text, features="html.parser").prettify()
-    print(json.loads(text), flush=True)
-
-    print(weighted_containers.json(), flush=True)
-    
-    return "dfsfsdfd"
-    
-    
-
-    #trey = ''.join(test)
-    print(weighted_containers.text[1], flush=True)
-    return "x"
-    #TODO Number of sessions for each product
-    #TODO Get total weight of each product
-
-    providers_sessions = []
-
-    #Get all sessions that are specific to this provider
-    for truck in weighted_containers:
-        for truck_id in result_arr:
-            LOG(truck['id'],LOG_TYPE.INFO)
-            if truck['id'] == truck_id:
-                providers_sessions.append(truck)
-
     providers_products=[]
 
-    for truck in providers_sessions:
+    for truck in sessions:
         flag=0
+        truck_product = truck['produce']
+        truck_neto = truck['neto']
+
+###################  checking products bill ##############
+    
+
         for product in providers_products:
-            if truck['produce'] == product['name']:
+            if truck_product == product['product']:
                 product['count'] += 1
-                product['amount'] += truck['neto']
-                product['pay'] += product['rate']*truck['neto']
-                total += product['rate']*truck['neto']
+                product['amount'] += truck_neto
+                product['pay'] += product['rate']*truck_neto
+                total += product['rate']*truck_neto
                 flag=1
 
 
-     #   if flag == 0:#No Products were found in the list we add it
-            #Fetch the rates for this specific provider
-           # sql_query = f"SELECT rate FROM Rates WHERE product_id={truck['produce']} AND scope={id};"
-          #  rates_arr = my_sql.getData(sql_query)
-           
-        #    if len(rates_arr) == 0:#We didn't find speific rate for this provider we have to look for ALL scope
-           #     sql_query = f"SELECT rate FROM Rates WHERE product_id={truck['produce']} AND scope='ALL'"
-                
-           #     rates_arr = my_sql.getData(sql_query)
-            #TODO for now we assume product is found in rates but that's not always the case so we have to add another check
+        exist_check = my_sql.getData(f"""SELECT EXISTS(SELECT product_id FROM Rates WHERE product_id='{truck['produce']}');""")
+        dump = json.dumps(exist_check)
+        value = str(dump[-3])
+        if value == str(0):  
+            return (f"Produce: {truck['produce']} does not apear in our rates, please upload new rates and try again.", 404)
 
-            # providers_products.append({
-            #     "name": truck['produce'],
-            #     "count" : 1,
-            #     "amount" : truck['neto'],
-            #     "rate": int(rates_arr[0][0]),
-            #     "pay" : truck['neto']*int(rates_arr[0][0])
-            # })
-            # total += int(rates_arr[0][0])*truck['neto']
+        if flag == 0:
+            rate_data = my_sql.getData(f"""SELECT rate FROM Rates WHERE product_id='{truck['produce']}' AND scope={provider_id};""")
+
+            if len(rate_data) == 0:
+                rate_data = my_sql.getData(f"""SELECT rate FROM Rates WHERE product_id='{truck['produce']}' AND scope='ALL';""")
+
+            rate_price = (rate_data[0]['rate'])
+
+
+            providers_products.append({
+            "product": truck_product,
+            "count" : 1,
+            "amount" : truck_neto,
+            "rate": rate_price,
+            "pay" : truck_neto*rate_price
+            })
+            total += rate_price*truck_neto
+
+
+
+    recipet = {
+        "id": provider_id,
+        "name": provider_name,
+        "from": from_date,
+        "to": to_date,
+        "truckCount": truck_count,
+        "sessionCount": session_count,
+        "products": providers_products,
+        "total": total
+    }
+    
+    return recipet
     
 if __name__ == '__main__':
     GET_bill(id)    
