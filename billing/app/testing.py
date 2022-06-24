@@ -126,7 +126,7 @@ def test_get_rates():
 
 
 def test():
-  functions = [test_health, test_post_provider, test_put_provider, test_post_truck, test_put_truck, test_post_rates, test_get_rates]
+  functions = [test_health, test_post_provider, test_put_provider, test_post_truck, test_put_truck]
   for func in functions:
     if not func():
       sys.stdout.write(f'ERROR ==> {func.__name__}')
