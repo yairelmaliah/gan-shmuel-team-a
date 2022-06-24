@@ -63,11 +63,13 @@ def GET_bill(id):
     d = json.loads(t)
     provider_name = d[0]['name']
 
+    try:
+        weighted_containers = requests.get(f"http://3.66.68.27:8081/weight?from={from_date}&to={to_date}&filter=out").json()
+        weighted_containers = json.dumps(weighted_containers)
+        weighted_containers = json.loads(weighted_containers)
 
-    weighted_containers = requests.get(f"http://3.66.68.27:8081/weight?from={from_date}&to={to_date}&filter=out").json()
-    weighted_containers = json.dumps(weighted_containers)
-    weighted_containers = json.loads(weighted_containers)
-
+    except requests.exceptions.JSONDecodeError:
+        return (f"Provider id : {provider_id} does not have bill for those dates.")
 
     total=0
     truck_count = len(licenses)
