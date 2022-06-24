@@ -18,8 +18,10 @@ CONTACT_EMAILS = {
     },
 
     "billing_team": {
-        "team_leader": "RotemK1",
+        # "team_leader": "RotemK1",
+        "team_leader": "yairelmaliah",
         "team_members": {
+            "yairelmaliah": "yairelmaliah319732@gmail.com",
             "RotemK1": "kalmanrotem@gmail.com",
             "asi111": "",
             "oshriza": ""
