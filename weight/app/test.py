@@ -27,7 +27,7 @@ def test_get_unknown():
   else: return 1
 
 def test_get_item():
-  req = requests.get(f"{url}/item/1234?from=000000000000")
+  req = requests.get(f"{url}/item/C-1")
   status_code = req.status_code
   if (status_code < 200 or status_code > 299): return 0
   else: return 1
@@ -40,7 +40,7 @@ def test_batch_weight():
   else: return 1
 
 def test_get_weight():
-  req = requests.get(f"{url}/weight")
+  req = requests.get(f"{url}/weight?from=0")
   status_code = req.status_code
   if (status_code < 200 or status_code > 299): return 0
   else: return 1

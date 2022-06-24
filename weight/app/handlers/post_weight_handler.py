@@ -33,16 +33,15 @@ def post_weight_handler(args):
   check_syntax(direction, unit)
 
   time_now = time.strftime('%Y%m%d%H%M%S')
-  print(time_now, flush=True)
-  # Check if theres already a truck/container session
+
   query = f"SELECT id,direction FROM `transactions` WHERE truck = {truck} order by datetime desc limit 1"
   exist_session = mysql.get_data(query)
   
 
-  if exist_session and (exist_session[0][1] == direction or direction == "none"):
+  if exist_session and exist_session[0][1] == "in" and direction == "none":
+    abort(400, f"Not possible to insert none after in -> caused by {truck}")
 
-    if exist_session[0][1] == "in":
-      abort(400, f"Not possible to insert none after in -> caused by {truck}")
+  if exist_session and exist_session[0][1] == direction:
 
     if force == "false": abort(400, f"Error in direction -> caused by {truck}")
 
@@ -61,7 +60,6 @@ def post_weight_handler(args):
     if check_if_truck_exist(truck):
         return insert_out_session(time_now, truck, containers, weight, produce)
     abort(400, f"truck {truck} never entered Gan Shmouel")
-  return "SUCCESS"
 
 def check_if_truck_exist(truck):
   query = f"""
@@ -130,7 +128,7 @@ def insert_out_session(time, truck, containers , weight, produce):
   session_id = mysql.get_data(f'SELECT id from transactions WHERE truck = {truck} order by datetime desc limit 1')
   session_id = session_id[0][0]
 
-  return json.dumps({ "id": session_id, "truck": truck,"bruto": bruto,"truckTara": weight, "neto": neto })
+  return { "id": session_id, "truck": truck,"bruto": bruto,"truckTara": weight, "neto": neto }, 200
 
 
 def update_out_sessions(id, time, truck, containers,weight, produce):
@@ -165,7 +163,7 @@ def update_out_sessions(id, time, truck, containers,weight, produce):
           """
 
   mysql.update_data(query, (time,truck,"out", ",".join(containers), bruto, weight,neto,produce,id,))
-  return json.dumps({ "id": get_new_session_id(id), "truck": truck,"bruto": bruto,"truckTara": weight, "neto": neto })
+  return { "id": get_new_session_id(id), "truck": truck,"bruto": bruto,"truckTara": weight, "neto": neto }, 200
   
 def update_in_session(id, time, truck, containers, weight, produce):
   query = """
@@ -180,7 +178,7 @@ def update_in_session(id, time, truck, containers, weight, produce):
         WHERE `id` = %s
         """
   mysql.update_data(query, (time, "in", truck, containers, weight, produce,id))
-  return json.dumps({ "id": get_new_session_id(id), "truck": truck,"bruto": weight })
+  return { "id": get_new_session_id(id), "truck": truck,"bruto": weight }, 200
 
 def insert_in_session(time, direction, truck, containers, weight, produce):
   
@@ -195,7 +193,7 @@ def insert_in_session(time, direction, truck, containers, weight, produce):
   session_id = mysql.get_data(f'SELECT id from transactions WHERE truck = {truck} order by datetime desc limit 1')
   session_id = session_id[0][0]
   # request.post()
-  return json.dumps({ "id": session_id, "truck": truck,"bruto": weight })
+  return { "id": session_id, "truck": truck,"bruto": weight }, 200
 
 
 def get_new_session_id(_id):
