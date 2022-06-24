@@ -15,7 +15,7 @@ if not url:
   exit(0)
 
 def test_health():
-  req = requests.get(f"{url}/healthasdasdasd")
+  req = requests.get(f"{url}/health")
   status_code = req.status_code
   if (status_code < 200 or status_code > 299): return 0
   else: return 1
@@ -47,11 +47,14 @@ def test_get_weight():
 
 def test():
   functions = [test_health, test_get_unknown, test_get_item, test_batch_weight, test_get_weight]
+  arr = []
   for func in functions:
     if not func():
+      arr.append(func)
       sys.stdout.write(f'ERROR ==> {func.__name__}')
 
-  sys.stdout.write('SUCCESS')
+  if not arr:
+    sys.stdout.write('SUCCESS')
 
 if __name__ == '__main__':
   test()
