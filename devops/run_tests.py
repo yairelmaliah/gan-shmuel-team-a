@@ -13,7 +13,7 @@ def run_test(branch_name):
     return subprocess.check_output(['python3', f'/tmp/gan-shmuel-app/{branch_name}/app/test.py'])
     # return os.system(f'python3 /tmp/gan-shmuel-app/{branch_name}/app/test.py')
 
-  
+
 
 
 
