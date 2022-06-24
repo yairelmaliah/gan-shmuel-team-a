@@ -19,7 +19,7 @@ def build_app(data):
         leader_email = CONTACT_EMAILS[f'{branch_name}_team']["team_members"][CONTACT_EMAILS[f'{branch_name}_team']["team_leader"]]
         pusher_email = CONTACT_EMAILS[f'{branch_name}_team']["team_members"][pusher_github_name]
     except:
-        print(f"Pusher email not exist in our system please add him --> {pusher_github_name}")
+        print(f"Pusher email not exist in our system please add him --> {pusher_github_name}", flush=True)
 
     # Remove previous test clone, and clone new changes
     os.system(f'rm -rf {TEST_TMP_PATH}')
@@ -41,9 +41,9 @@ def build_app(data):
         # Send success results to pusher's/leader's email address
         subject = HEADING_SUCCESS
         if leader_email == pusher_email:
-            send_mail([leader_email],subject,test_results)
+            send_mail([leader_email],subject,test_results.decode("utf-8"))
         else:    
-            send_mail([leader_email,pusher_email],subject,test_results)
+            send_mail([leader_email,pusher_email],subject,test_results.decode("utf-8"))
 
         # Deploy new version
         print("Deploy new app version...", flush=True)
@@ -60,9 +60,9 @@ def build_app(data):
         # Send failure results to pusher's/leader's email address
         subject = HEADING_FAILURE
         if leader_email == pusher_email:
-            send_mail([leader_email],subject,test_results)
+            send_mail([leader_email],subject,test_results.decode("utf-8"))
         else:
-            send_mail([leader_email,pusher_email],subject,test_results)
+            send_mail([leader_email,pusher_email],subject,test_results.decode("utf-8"))
 
         # Abort
         exit(0)
