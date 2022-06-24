@@ -6,7 +6,7 @@ services:
     image: mysql:5.7
     volumes:
       - mysql-weight-data:/var/lib/mysql
-      - ./db:/docker-entrypoint-initdb.d
+      - ./db/weightdb.sql:/docker-entrypoint-initdb.d/weightdb.sql
     environment:
       - MYSQL_ROOT_PASSWORD=1234
 
