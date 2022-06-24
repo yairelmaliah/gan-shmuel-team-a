@@ -15,7 +15,7 @@ if not url:
   exit(0)
 
 def test_health():
-  req = requests.get(f"{url}/health")
+  req = requests.get(f"{url}/healthasdasdasd")
   status_code = req.status_code
   if (status_code < 200 or status_code > 299): return 0
   else: return 1
