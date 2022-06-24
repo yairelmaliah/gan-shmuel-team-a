@@ -104,7 +104,7 @@ def GET_bill(id):
     #We expect to get a json array for all trucks that went out
     #headers = {"Accept": "application/json"}
     weighted_containers = requests.get(f"http://3.66.68.27:8081/weight?from={from_date}to={to_date}&filter=out").json()
-  
+    
     return weighted_containers
     
     print(a[0], flush=True)
