@@ -9,6 +9,7 @@ from handlers.get_unknown_handler import get_unknown_handler
 
 app = Flask(__name__)
 
+
 # ======================================
 # Main Routes
 # ======================================
@@ -18,7 +19,7 @@ def home():
 
 @app.route("/health")
 def health():
-  return "ok" , 200
+  return "ok, Healty" , 200
 
 @app.route("/weight", methods=["POST","GET"])
 def post_weight():

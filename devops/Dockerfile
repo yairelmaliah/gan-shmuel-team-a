@@ -7,7 +7,6 @@ RUN apk get update \
     && apk add docker-compose 
 RUN pip install -r requirements.txt
 RUN pip install requests
-RUN mkdir /test && cd /test && git clone -b weight --single-branch https://github.com/yairelmaliah/gan-shmuel-team-a.git
 WORKDIR /app
 COPY . .
 ENTRYPOINT [ "python3" ]

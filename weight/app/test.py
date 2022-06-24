@@ -47,11 +47,14 @@ def test_get_weight():
 
 def test():
   functions = [test_health, test_get_unknown, test_get_item, test_batch_weight, test_get_weight]
+  arr = []
   for func in functions:
     if not func():
+      arr.append(func)
       sys.stdout.write(f'ERROR ==> {func.__name__}')
 
-  sys.stdout.write('SUCCESS')
+  if not arr:
+    sys.stdout.write('SUCCESS')
 
 if __name__ == '__main__':
   test()
