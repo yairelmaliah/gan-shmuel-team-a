@@ -1,6 +1,4 @@
 from db import Mysql
-from flask import jsonify
-import json
 
 def get_session_handler(id):
   mysql = Mysql()
