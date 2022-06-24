@@ -8,4 +8,3 @@ def get_unknown_handler():
 		return "There are no containers without weight :)", 200
 	return {"data":[x[0] for x in data]}, 200
 		
-
