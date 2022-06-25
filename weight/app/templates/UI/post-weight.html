@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#chatbox').text('');
+
+      document.getElementById('sendBtn').addEventListener('click', function (e) {
+        e.preventDefault();
+
+        let direction = document.getElementById('direction');
+        let truck = document.getElementById('truck');
+        let containers = document.getElementById('containers');
+        let weight = document.getElementById('weight');
+        let unit = document.getElementById('unit');
+        let force = document.getElementById('force');
+        let produce = document.getElementById('produce');
+        let res = document.getElementById('chatbox');
+        let STATUS = 200;
+        fetch(
+          `/weight?direction=${direction.value}&weight=${weight.value}&unit=${unit.value}&containers=${containers.value}&produce=${produce.value}&truck=${truck.value}&force=${force.value}`,
+          { method: 'POST' }
+        )
+          .then(response => {
+            STATUS = response.status;
+            return response.json();
+          })
+          .then(async result => {
+            res.textContent = '';
+            const delay = ms => new Promise(res => setTimeout(res, ms));
+            await delay(200);
+            res.textContent = JSON.stringify(result, null, 4);
+            console.log(STATUS);
+            if (STATUS === 200) {
+              truck.value = '';
+              containers.value = '';
+              weight.value = '';
+              produce.value = '';
+            }
+          });
+      });
+    });
+  </script>
+
+  <head> </head>
+  <style>
+    input[type='text'],
+    select {
+      width: 20%;
+      padding: 6px 10px;
+      margin: 8px 0;
+      display: flex;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type='number'],
+    select {
+      width: 20%;
+      padding: 6px 10px;
+      margin: 8px 0;
+      display: flex;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type='submit'] {
+      width: 20%;
+      background-color: #4caf50;
+      color: white;
+      padding: 7px 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type='submit']:hover {
+      background-color: #45a049;
+    }
+
+    div {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+  </style>
+  <body>
+    <button
+      style="
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 4px 2px;
+        cursor: pointer;
+      "
+      onclick="window.location='/'"
+    >
+      HOME
+    </button>
+    <h3>Get Item</h3>
+    <h4>Send your truck/container id</h4>
+    <div>
+      <form>
+        <label for="direction">Direction</label>
+        <select id="direction" name="direction">
+          <option selected="selected" value="in">In</option>
+          <option value="none">None</option>
+          <option value="out">Out</option>
+        </select>
+
+        <label for="truck">Truck License</label>
+        <input type="text" id="truck" name="truck" placeholder="" />
+
+        <label for="containers">Containers</label>
+        <input type="text" id="containers" name="containers" placeholder="" />
+
+        <label for="weight">Weight</label>
+        <input min="0" max="2147483647" type="number" id="weight" name="weight" placeholder="" />
+
+        <label for="unit">Unit</label>
+        <select id="unit" name="unit">
+          <option selected="selected" value="kg">Kg</option>
+          <option value="lbs">Lbs</option>
+        </select>
+
+        <label for="force">Force</label>
+        <select id="force" name="force">
+          <option selected="selected" value="false">False</option>
+          <option value="true">True</option>
+        </select>
+
+        <label for="produce">Produce</label>
+        <input type="text" id="produce" name="produce" placeholder="" />
+
+        <input id="sendBtn" type="submit" value="Submit" />
+        <pre id="chatbox"></pre>
+        <p style="opacity: 0.5">You can try: 155-34-443, 202206241905</p>
+      </form>
+    </div>
+  </body>
+</html>
