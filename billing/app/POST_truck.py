@@ -15,8 +15,8 @@ def POST_truck():
 
     # provider_id = request.form['provider_id']
     # truck_id = request.form['truck_license']
-    provider_id = request.args['provider_id']
-    truck_id = request.args['truck_id']
+    provider_id = request.form['provider_id']
+    truck_id = request.form['truck_id']
     
   
     id = my_sql.getData(f'SELECT EXISTS(SELECT * FROM Provider WHERE id="{provider_id}");')
