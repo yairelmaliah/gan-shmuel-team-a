@@ -1,7 +1,6 @@
 from db import Mysql
 import time
-import json
-from flask import abort
+
 mysql = Mysql()
 
 directions_to_use = { "in","out","none"}
@@ -9,10 +8,11 @@ weight_unit_to_use = {"kg","lbs"}
 
 def check_syntax(direction, weight_unit):
     if direction not in directions_to_use:
-        abort(400, "direction {} doesn't exist".format(direction))
+        return {"data": "direction {} doesn't exist".format(direction)}, 400
+
 
     if weight_unit not in weight_unit_to_use:
-        abort(400, "weight unit {} doesn't exist".format(weight_unit))
+        return {"data": "weight unit {} doesn't exist".format(weight_unit)},400
 
 def post_weight_handler(args):
 
@@ -25,25 +25,24 @@ def post_weight_handler(args):
   produce = args.get('produce', None)
 
   if not weight:
-    abort(400, "must insert weight")
+    return {"data":"must insert weight"}, 400
 
   if not containers and not truck:
-    abort(400, "must insert truck license plate or container id")
+    return {"data":"must insert truck license plate or container id"}, 400
 
   check_syntax(direction, unit)
 
   time_now = time.strftime('%Y%m%d%H%M%S')
 
-  query = f"SELECT id,direction FROM `transactions` WHERE truck = {truck} order by datetime desc limit 1"
+  query = f"SELECT id,direction FROM `transactions` WHERE truck = '{truck}' order by datetime desc limit 1"
   exist_session = mysql.get_data(query)
   
-
   if exist_session and exist_session[0][1] == "in" and direction == "none":
-    abort(400, f"Not possible to insert none after in -> caused by {truck}")
+    return {"data": f"Not possible to insert none after in -> caused by {truck}"},400
 
   if exist_session and exist_session[0][1] == direction:
 
-    if force == "false": abort(400, f"Error in direction -> caused by {truck}")
+    if force == "false": return {"data":f"Error in direction -> caused by {truck}"}, 400
 
     if force == "true":
       if direction == "in":
@@ -59,14 +58,14 @@ def post_weight_handler(args):
   if direction == "out":
     if check_if_truck_exist(truck):
         return insert_out_session(time_now, truck, containers, weight, produce)
-    abort(400, f"truck {truck} never entered Gan Shmouel")
+    return {"data": f"truck {truck} never entered Gan Shmouel"},400
 
 def check_if_truck_exist(truck):
   query = f"""
-          SELECT * from transactions WHERE truck = {truck}"""
+          SELECT * from transactions WHERE truck = '{truck}'"""
   data = mysql.get_data(query)
   query1 = f"""
-          SELECT direction from transactions WHERE truck = {truck} ORDER BY id DESC LIMIT 1"""
+          SELECT direction from transactions WHERE truck = '{truck}' ORDER BY id DESC LIMIT 1"""
   data1 = mysql.get_data(query1)  
   
   
@@ -94,7 +93,7 @@ def check_if_container_exist_and_insert(containers):
 
 
 def insert_out_session(time, truck, containers , weight, produce):
-  transaction_data = mysql.get_data(f'SELECT bruto,containers,produce from transactions WHERE truck = {truck} order by datetime desc limit 1')
+  transaction_data = mysql.get_data(f"""SELECT bruto,containers,produce from transactions WHERE truck = '{truck}' order by datetime desc limit 1""")
   containers = transaction_data[0][1].split(",")
   bruto = transaction_data[0][0]
   produce = transaction_data[0][2]
@@ -125,14 +124,14 @@ def insert_out_session(time, truck, containers , weight, produce):
   data = (time, "out", truck, ",".join(containers),bruto, weight, neto, produce)
 
   mysql.insert_data(query,data)
-  session_id = mysql.get_data(f'SELECT id from transactions WHERE truck = {truck} order by datetime desc limit 1')
+  session_id = mysql.get_data(f"""SELECT id from transactions WHERE truck = '{truck}' order by datetime desc limit 1""")
   session_id = session_id[0][0]
 
   return { "id": session_id, "truck": truck,"bruto": bruto,"truckTara": weight, "neto": neto }, 200
 
 
 def update_out_sessions(id, time, truck, containers,weight, produce):
-  transaction_data = mysql.get_data(f'SELECT bruto,containers from transactions WHERE truck = {truck} AND direction = "in"')
+  transaction_data = mysql.get_data(f'SELECT bruto,containers from transactions WHERE truck = "{truck}" AND direction = "in"')
   containers = transaction_data[0][1].split(",")
   bruto = transaction_data[0][0]
   total_containers_weight = 0
@@ -189,8 +188,7 @@ def insert_in_session(time, direction, truck, containers, weight, produce):
   containers = containers.split(",")
   data = (time, direction, truck, ",".join(containers), weight, produce)
   mysql.insert_data(query, data)
-
-  session_id = mysql.get_data(f'SELECT id from transactions WHERE truck = {truck} order by datetime desc limit 1')
+  session_id = mysql.get_data(f'SELECT id from transactions WHERE truck = "{truck}" order by datetime desc limit 1')
   session_id = session_id[0][0]
   # request.post()
   return { "id": session_id, "truck": truck,"bruto": weight }, 200

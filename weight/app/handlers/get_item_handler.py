@@ -9,6 +9,7 @@ def get_item_handler(args,_id):
   fromTime = '{:<14d}'.format(int(fromTime))
   toTime = '{:<14d}'.format(int(toTime))
 
+
   query = "select * from transactions order by datetime desc"
   data = mysql.get_data(query)
 
@@ -25,4 +26,4 @@ def get_item_handler(args,_id):
       "sessions": [s[0] for s in arr]
     }, 200
   
-  return f"There is no such container/truck with this id '{_id}'", 404
+  return {"data": f"There is no such container/truck with this id '{_id}'"}, 404

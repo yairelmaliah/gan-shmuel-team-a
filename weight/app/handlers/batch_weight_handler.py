@@ -40,7 +40,7 @@ def batch_weight_handler(file):
         return f"{file} Has Been Added To Database Succesfully", 200
 
   except Exception as e:
-    return f"Can't load this file '{file}' , Please check the file"
+    return f"Can't load this file '{file}' , Please check the file", 500
 
   return f"Sorry, but {file} doe's not exist", 404
 

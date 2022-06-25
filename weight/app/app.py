@@ -1,13 +1,45 @@
 from flask import Flask, render_template, request
-from db import Mysql
 from handlers.batch_weight_handler import batch_weight_handler
 from handlers.post_weight_handler import post_weight_handler
 from handlers.get_weight_handler import get_weight_handler
 from handlers.get_session_handler import get_session_handler
 from handlers.get_item_handler import get_item_handler
 from handlers.get_unknown_handler import get_unknown_handler
-
+from db import Mysql
 app = Flask(__name__)
+
+
+
+# ======================================
+# UI routes
+# ======================================
+@app.route("/ui/batch-weight")
+def ui_batch_weight():
+  return render_template("UI/batch-weight.html"), 200
+
+@app.route("/ui/item")
+def ui_get_item():
+  return render_template("UI/get-item.html"), 200
+
+@app.route("/ui/session")
+def ui_get_session():
+  return render_template("UI/get-session.html"), 200
+
+@app.route("/ui/get-weight")
+def ui_get_weight():
+  return render_template("UI/get-weight.html"), 200
+
+@app.route("/ui/get-unknown")
+def ui_get_unknown():
+  return render_template("UI/get-unknown.html"), 200
+
+@app.route("/ui/post-weight")
+def ui_post_weight():
+  return render_template("UI/post-weight.html"), 200
+
+@app.route("/ui/get-health")
+def ui_get_health():
+  return render_template("UI/get-health-status.html"), 200
 
 
 # ======================================
@@ -15,11 +47,15 @@ app = Flask(__name__)
 # ======================================
 @app.route("/")
 def home():
-  return "Welcome to weight system", 200
+  return render_template("index.html"), 200
 
 @app.route("/health")
 def health():
-  return "ok, Healty" , 200
+  mysql = Mysql()
+  res = mysql.get_data("SELECT 1;")
+  if not res:
+    return {"data": "Cant Reach To Mysql ... NOT HEALTHY !!"}, 500
+  return {"SERVER": "Healthy", "DB": "Healthy"},200
 
 @app.route("/weight", methods=["POST","GET"])
 def post_weight():
