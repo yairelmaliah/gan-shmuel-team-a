@@ -72,7 +72,7 @@ def build_app(data):
         # Abort
         exit(0)
         
-    print("FINISHED SUCCESFULLY")
+    print("FINISHED SUCCESFULLY", flush=True)
     exit(1)
 
 
