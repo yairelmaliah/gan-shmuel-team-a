@@ -72,7 +72,7 @@ def build_app(data):
         # Abort
         exit(0)
         
-    print("FINISHED SUCCESFULLY")
+    print("FINISHED SUCCESFULLY", flush=True)
     exit(1)
 
 
@@ -91,3 +91,18 @@ def webhook():
  
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8082, debug=True)
+
+
+
+
+# DOESNT WORK CORRECTLY
+# @app.route("/monitor")
+# def monitor():
+#     portstatus(dev)
+#     return render_template('index.html')
+
+# @app.route("/monitor/openports.txt")
+# def ports():
+#     with app.open_resource('open_ports.txt') as f:
+#         contents = f.read()
+#     return contents
