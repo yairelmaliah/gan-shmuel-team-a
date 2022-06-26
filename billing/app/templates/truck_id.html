@@ -1,68 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script>
-    function room() {
-      var room = window.location.href.substring(window.location.href.lastIndexOf('/')+1);
-      return "/api/"+room;
-    }
-    
-    // function updateChat() {
-    //   $.get(room(),function(data) {
-    //     $("#chatbox").text(data);
-    //     window.setTimeout(updateChat,15000);
-    //   })
-    // }
-  //   function required(inputtx) 
-  //  {
-  //    if (inputtx.value.length == 0)
-  //     { 
-  //        alert("message");  	
-  //        return false; 
-  //     }  	
-  //     return true; 
-  //   } 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  
+  <script type="text/javascript">
+      function truck_id() {
+        var truck_id = location.href;
+        // truck_id = href.match(/([^\/]*)\/*$/)[1];
+        console.log(truck_id)
+      }
+        function truck_number() {
+            return  window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+      }
 
-    // function sendmessage() {
-    //   // var myRequest = new Request('api/provider');
-
-    //   // fetch(myRequest, {method: "GET"}).then(function(response) {
-    //   //   console.log(response.status); // returns 200
-
-    //   // });
-    //   if ($("input[name='provider']").val() == 0) {
-    //     alert("Please enter a valid provider name")
-    //   } else {
-    //     $.post( room(), $( "#inform" ).serialize());
-    //     alert($("input[name='provider']").val() + " inserted into the Database")
-    //   }
-    //   // $.post( room(), $( "#inform" ).serialize());
-    //   // console.log($("input[name='provider']").val());
-    // }
-    setTimeout(function(){
-        $("input[id='provider_id']").val("Moshe-Tapuzim");
-
+      //   function changeText2() {
+      //   var t1 = document.getElementById('t1').value;
+      //   var t2 = document.getElementById('t2').value;
+      //   var lnk = document.getElementById('lnk');
+      //   lnk.href = truck_id() +"/?from=" +t1 +"&to=" +t2 ;
+      //   window.location = truck_id() +"/?from=" +t1 +"&to=" +t2;
+      // }
+      function myFunction() {
+        var number = "Truck Number " + truck_number();
+        document.getElementById("Truck_number").innerHTML = number;
+      }
+      const url = location.href;
+      const lastSegment = url.split("/")
+      let idnumber = lastSegment[lastSegment.length-2];
+      setTimeout(function(){
+        document.getElementById("idnumber").innerHTML = idnumber;
+        $("input[id='provider_id']").val("10005");
       }, 100); 
-    $(document).ready(function() {
+      $(document).ready(function() {
           $('#sendBtn').click(function () {
               var provider_id = $('#provider_id').val();
-              const  str = "api/provider"
+              const  str = truck_id()
               // console.log("id: ", truck_id())
               // console.log("num: " + truck_number())
               $.ajax({
                   url: str ,     //Your api url
-                  type: 'POST',   //type is any HTTP method
+                  type: 'PUT',   //type is any HTTP method
                   data:
                     {provider_id:provider_id
                   },
                   success: function (data, textStatus, xhr) {
                     // console.log(data)
-                    // const lastSegment = data.split("")
-                    // let idnumber = lastSegment[lastSegment.length + 1];
-                    // console.log(idnumber)
                     // console.log(textStatus)
                     // console.log(xhr.status)
-                    alert(provider_id + " added!")
+                    alert(data)
                   },
                   error: function (data, textStatus, xhr) {
                     if (data.status === 409) {
@@ -74,20 +58,11 @@
               })
           });
       });
-    // $(document).ready(function() {
-    //   $("#chatbox").text("Loading Providers...");
-    //   // if ($("#provider").val != 0) {
-    //   // }
-    //   $("input[name='provider']").val("Moshe-Tapuzim");
-    //   $("#sendBtn").click(sendmessage)
-    //   // $("#sendBtn").click(makeRequestt)
-      
-    //   window.setTimeout(updateChat,15000);
-    // });
+
 
   </script>
 <head>
-<title>Providers</title>
+<title>Trucks</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -127,16 +102,16 @@ h1 {letter-spacing: 6px}
 <!-- Photo Grid -->
 <div class="w3-row-padding-32" style="margin-bottom:80px">
   <div class="w3-panel w3-center" style="padding:1px 1px">
-      <h3>Enter new provider name: </h3>
+      <h3>Update the provider of this truck owner: <span id="idnumber"></span></h3>
       <br>
-      <div class="contentBlock">
-        <form id="inform" action="/api/provider" method="POST">
-          <b>New provider : </b> <br> <input id="provider_id" type=text>
+      <div class="truck-form">
+        <form id="inform" action="/api/" method="POST">
+          <b>Provider id: </b> <br> <input id="provider_id" type=text >
           <br>
           <input id="sendBtn" type="button" value="submit">
           <br>
         </form>
-        <a href="/provider/10003/"><button class="update-provider">update provider</button></a>
+        <a href="/truck"><button class="update-provider">Enter new truck</button></a>
       </div>
       <!-- <button class="update-provider">update provider</button> -->
   </div>

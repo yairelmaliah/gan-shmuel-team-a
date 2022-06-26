@@ -2,7 +2,13 @@ version: '3'
 
 services:
   billing_app:
+    volumes:
+      - /home/ubuntu/volumes/in-billing:/src/in
     ports:
       - 8080:5000
-
+  billing_db:
+    volumes:
+      - mysql-billing-data:/var/lib/mysql
+      - /home/ubuntu/volumes/sql-billing/billingdb.sql:/docker-entrypoint-initdb.d/billingdb.sql
+      
 # docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up --build

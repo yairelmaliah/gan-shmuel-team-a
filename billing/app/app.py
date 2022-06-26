@@ -9,6 +9,7 @@ from POST_rates import POST_rates
 from GET_rates import GET_rates
 from GET_bill import GET_bill
 from health_check import health_check
+import requests
 
 
 
@@ -24,14 +25,14 @@ def index():
 def health():
     return "OK", 200
 
-@app.route("/health")
-def health_web():
-    return render_template(index.html)
+# @app.route("/health")
+# def health_web():
+#     return render_template(index.html)
 
 
-@app.route("/api/health")
-def api_web_health():
-    return render_template(index.html)
+# @app.route("/api/health")
+# def api_web_health():
+#     return render_template(index.html)
 
 
 
@@ -66,36 +67,58 @@ def provider():
 
 ########### PUT PROVIDER ID ######
 
-
-@app.route("/api/provider/<id>/", methods=['PUT'])
-def put_api_provider_id(id):
-        return PUT_provider(id)
-
-
-@app.route("/provider/<id>/", methods=['PUT'])
-def put_provider_id(id):
-        return PUT_provider(id)
+@app.route('/api/provider/<id>/', methods=['PUT'])
+def put_api_provider(id):
+    return PUT_provider(id)
 
 
-@app.route("/api/provider/<id>/", methods=['GET'])
-def put_provider_render():
-    return render_template('provider_id.html')
+@app.route('/provider/<id>/', methods=['PUT'])
+def put_provider(id):
+    return PUT_provider(id)
 
-    
 
-@app.route("/provider/<int:id>")
+# @app.route("/provider/<id>/", methods=['PUT'])
+# def put_provider_id(id):
+#         return PUT_provider(id)
+
+
+# @app.route("/api/provider/<id>/", methods=['GET'])
+# def put_provider_render():
+#     return render_template('provider_id.html')
+
+# @app.route("/providerid", methods=['GET','POST'])
+# def providerid():
+#     return render_template('provider_id.html')
+
+@app.route("/provider/<int:id>/")
 def provider_id(id):
     if id < 10001:
        return f'You are not allowed'
     else:
         return render_template('provider_id.html')
 
+# @app.route("/api/provider/<int:id>")
+# def provider_id(id):
+#     if request.method == 'POST':
+#         return 'Hello, {}!'.format(request.form['new_provider'])
+#     else:
+#         return '''
+
+
+#             <title>Does it work ?</title>
+#             <h1>PUT test</h1>
+#             <form action=http://localhost:5000/api/provider/10003 method=post>
+#                 <input type=text name=new_provider>
+#                 <input id="sendBtn" type=submit value=try>
+#             </form>
+#         '''
+
 
 ############################################
 ################### Trucks #################
 
 
-### POST TRUCK ####
+## POST TRUCK ####
 @app.route("/api/truck", methods=['POST'])
 def post_api_truck():
     return POST_truck()
@@ -117,39 +140,39 @@ def post_truck_render():
     return render_template('truck.html')
 
 
-@app.route("/truck/")
+@app.route("/truck")
 def truck():
     return render_template('truck.html')
 
 
 ### PUT TRACK ID ###
 
-@app.route('/api/truck/<id>/', methods=['PUT'])
-def put_api_truck(id):
-        return PUT_truck(id)
+@app.route('/api/truck/<truck_id>/', methods=['PUT'])
+def put_api_truck(truck_id):
+        return PUT_truck(truck_id)
 
 
-@app.route('/truck/<id>/', methods=['PUT'])
-def put_truck(id):
-        return PUT_truck(id)
+@app.route('/truck/<truck_id>/', methods=['PUT'])
+def put_truck(truck_id):
+        return PUT_truck(truck_id)
 
 ### GET TRUCK ID ####
 
-@app.route("/api/truck/<id>/", methods=['GET'])
-def get_api_truck_id(id):
-    return GET_truck(id)
+# @app.route("/api/truck/<id>/", methods=['GET'])
+# def get_api_truck_id(id):
+#     return GET_truck(id)
 
-@app.route("/truck/<id>/", methods=['GET'])
-def get_func_truck_id(id):
-    return GET_truck(id)
+# @app.route("/truck/<id>/", methods=['GET'])
+# def get_func_truck_id(id):
+#     return GET_truck(id)
 
-@app.route("/api/truck/<id>/")
-def get_api_func_truck_id():
-    return render_template('index.html')
+# @app.route("/api/truck/<truck_id>/")
+# def get_api_func_truck_id():
+#     return render_template('truck_id.html')
 
-@app.route("/truck/<id>/")
-def get_truck_id():
-    return render_template('index.html')
+@app.route("/truck/<truck_id>/")
+def get_truck_id(truck_id):
+    return render_template('truck_id.html')
 
 
 #######################################################

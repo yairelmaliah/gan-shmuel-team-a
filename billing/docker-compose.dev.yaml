@@ -3,7 +3,12 @@ services:
   billing_app:
     volumes:
       - ./app:/src/app
+      - ./in:/src/in
     ports:
       - 5000:5000
+  billing_db:
+    volumes:
+      - mysql-billing-data:/var/lib/mysql
+      - ./db/billingdb.sql:/docker-entrypoint-initdb.d/billingdb.sql
 
 # docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml up --build

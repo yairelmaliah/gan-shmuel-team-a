@@ -1,96 +1,134 @@
+<!DOCTYPE html>
 <html>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-      function room() {
-        var room = window.location.href.substring(window.location.href.lastIndexOf('/')+1);
-        // if (provid) {
-        //   return room
-        // }
-        return "/provider/"+room;
-      }
-      // async function makeRequest() {
-      //     try {
-      //         const response = await fetch('http://localhost:5000/provider');
-
-      //         console.log('response.status: ', response.status); // 👉️ 200
-      //         console.log(response);
-      //         if (response.status === 200) {
-      //           // $("#exist").text("enter name");
-      //         }
-      //         else if (response.status === 409) {
-      //           console.log("baba")
-      //           $("#exist").text("Provider name is already exist");
-      //         }
-
-      //     } catch (err) {
-      //         console.log(err);
-      //     }
-      // }
-      // async function makeRequestt() {
-      //     try {
-      //         const response = await fetch('http://localhost:5000/api/provider');
-
-      //         console.log('response.status: ', response.status); // 👉️ 200
-      //         console.log(response);
-      //         if (response.status === 200) {
-      //           $("#exist").text("creating...");
-      //         }
-      //         else if (response.status === 405) {
-      //           console.log("baba")
-      //           $("#exist").text("Provider name is already exist");
-      //         }
-      //         else if (response.status === 409) {
-      //           console.log("baba")
-      //           $("#exist").text("Provider name is already exist");
-      //         }
-
-      //     } catch (err) {
-      //         console.log(err);
-      //     }
-      // }
-      function updateChat() {
-        $.get(room(),function(data) {
-          $("#chatbox").text(data);
-          // $("#provid").text("Your about to update id: " + room(provid) + " Please enter new name:");
-
-          window.setTimeout(updateChat,15000);
-        })
-      }
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   
-      function sendmessage() {
-        $.post( room(), $( "#inform" ).serialize());
+  <script type="text/javascript">
+      // lastSegment[lastSegment.length-2];
+      function provider_id() {
+        var provider_id = location.href;
+        var lastindex = location.href.substring(window.location.href.lastIndexOf('/'));
+
+        console.log(provider_id);
       }
-  
+        function truck_number() {
+            return  window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+      }
+
+      //   function changeText2() {
+      //   var t1 = document.getElementById('t1').value;
+      //   var t2 = document.getElementById('t2').value;
+      //   var lnk = document.getElementById('lnk');
+      //   lnk.href = truck_id() +"/?from=" +t1 +"&to=" +t2 ;
+      //   window.location = truck_id() +"/?from=" +t1 +"&to=" +t2;
+      // }
+      function myFunction() {
+        var number = "Truck Number " + truck_number();
+        document.getElementById("Truck_number").innerHTML = number;
+      }
+      const url = location.href;
+      const lastSegment = url.split("/")
+      let idnumber = lastSegment[lastSegment.length-2];
+      setTimeout(function(){
+        document.getElementById("idnumber").innerHTML = idnumber;
+        $("input[id='new_provider']").val("Moshe-Afarsekim");
+
+      }, 100); 
       $(document).ready(function() {
-        // $("#chatbox").text("Loading Providers...");
-        $("#sendBtn").click(sendmessage)
-        // $("#sendBtn").click(makeRequestt)
-        
-        window.setTimeout(updateChat,15000);
+        $('#sendBtn').click(function () {
+              var new_provider = $('#new_provider').val();
+              const  str = provider_id()
+              // console.log("id: ", truck_id())
+              // console.log("num: " + truck_number())
+              $.ajax({
+                  url: str ,     //Your api url
+                  type: 'PUT',   //type is any HTTP method
+                  data:
+                    {new_provider:new_provider
+                  },
+                  success: function (data, textStatus, xhr) {
+                    // console.log(data)
+                    // console.log(textStatus)
+                    // console.log(xhr.status)
+                    alert("Provider name is changed to: " + $("input[id='new_provider']").val())
+                  },
+                  error: function (data, textStatus, xhr) {
+                    if (data.status === 409) {
+                      alert($("input[id='new_provider']").val() + " already exist, please try again!")
+                    }
+                    console.log(data.responseText) // response message
+                    // console.log(xhr.status)
+                  } 
+              })
+          });
       });
+
+  </script>
+<head>
+<title>Update Provider</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+<link rel="stylesheet" href="../static/stlye.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1 {font-family: "Raleway", Arial, sans-serif}
+h1 {letter-spacing: 6px}
+.w3-row-padding img {margin-bottom: 12px}
+</style>
+</head>
+<body>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-content" style="max-width:1500px">
+
+<!-- Header -->
+<header class="w3-panel w3-center w3-opacity" style="padding:8px 16px">
+  <h1 class="w3-xlarge">Welcome To Kibbutz Gam-Shmuel</h1>
+  <h1>A-Billing Services</h1>
+  <h8>By: Rotem Kalman, Oshri Zafrani, Asres Frede</h8>
   
-    </script>
-    <head>
-      <!-- <link rel="stylesheet" href="{{url_for('static',filename='styles/style.css')}}"> -->
-    </head>
-    <body>
-      <nav class="headNev">
-        <a class="headNevLink1" href="/">  <i>Index</i></a>
-        <a class="headNevLink2" href="/health">Health </a>
-        <a class="headNevLink1" href="/provider">Enter new provider</a>
-        <a class="headNevLink1" href="/provider_id">update provider</a>
-        <a class="headNevLink2" href="/rates">Rates</a>
-        <a class="headNevLink1" href="/truck">Trucks </a>
-        <a class="headNevLink2" href="/bills">Bills </a>
-    </nav>
-    <div class="contentBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray">
-      <h1 id="provid">Loading providers...</h1>
-      <form id="inform" action="/api/provider.html" method="PUT">
-        <input name="provider" type=text >
-        <input id="sendBtn" type="button" value="submit">
-      </form>
-      <!-- <pre id="chatbox">Loading...</pre> -->
-      <p id="exist"></p>
+  <div class="w3-padding-32">
+    <div class="w3-bar w3-border">
+      <a href="/" class="w3-bar-item w3-button">Home</a>
+      <a href="/health" class="w3-bar-item w3-button w3-light-grey">Health</a>
+      <a href="/provider" class="w3-bar-item w3-button w3-hide-small">Provider</a>
+      <a href="/truck" class="w3-bar-item w3-button w3-hide-small">Trucks</a>
+      <a href="/rates" class="w3-bar-item w3-button w3-hide-small">Rates</a>
+      <a href="/bill" class="w3-bar-item w3-button w3-hide-small">Bill</a>
     </div>
-    </body>
-  </html>
+  </div>
+</header>
+
+<!-- Photo Grid -->
+<div class="w3-row-padding-32" style="margin-bottom:80px">
+  <div class="w3-panel w3-center" style="padding:1px 1px">
+      <h3>Update provider name for this id: <span id="idnumber"></span></h3>
+      <br>
+      <div class="contentBlock">
+        <form id="inform" action="/api/" method="POST">
+          <b>New provider name : </b> <br><input id="new_provider" type=text >
+          <br>
+          <input id="sendBtn" type="button" value="submit">
+          <br>
+        </form>
+        <a href="/provider"><button class="update-provider">Enter new provider</button></a>
+      </div>
+      <!-- <button class="update-provider">update provider</button> -->
+  </div>
+</div>
+
+  
+<!-- End Page Content -->
+</div>
+  
+<!-- End Page Content -->
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-61 w3-light-grey w3-center w3-medium"> 
+  <h8>A-Billing services by <a href="/" target="_blank" class="w3-hover-text-green">Oshri Zafrani, Rotem Kalman, Asres Frede </a></h8>
+</footer>
+
+</body>
+</html>

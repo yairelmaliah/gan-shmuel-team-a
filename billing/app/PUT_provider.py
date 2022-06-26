@@ -6,14 +6,14 @@ from db_utils import db_utils
 mysql = db_utils()
 
 def data_exist(): # get data from the db and check if name exist in the 'Provider' table
-    new_provider = request.args['new_provider']
+    new_provider = request.form['new_provider']
     name = mysql.getData(f"SELECT * from Provider WHERE name=('{new_provider}')")
     json_str = json.dumps(name)
     resp = json.loads(json_str)
     return resp[0]['name'] # take only the name position
 
 def update_new_provider(id):
-    new_provider = request.args['new_provider']
+    new_provider = request.form['new_provider']
     provider_id = id
     new_name = f"UPDATE Provider SET name = ('{new_provider}') WHERE id = ('{provider_id}');"
     mysql.updateData(new_name)

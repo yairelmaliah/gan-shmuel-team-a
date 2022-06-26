@@ -39,39 +39,40 @@ def test_health():
   status_code = req.status_code
   log_name = "HEALTH"
   if (status_code < 200 or status_code > 299): 
-    print(f"{bcolors.FAIL}{log_name}ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}{log_name}ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 0
   else: 
-    print(f"{bcolors.OKGREEN}HEALTH: OK, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}HEALTH: OK, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
   
 def test_post_provider():
-  payload = {'provider':'fgrttt'} # because its send it with form
+  payload = {'provider_id':'fgrttt'} # because its send it with form
   log_name = "POST PROVIDER"
   req = requests.post(f"{url}/api/provider", data=payload)
   status_code = req.status_code
   if ((status_code >= 200 and status_code < 299) and status_code != 409): 
-    print(f"{bcolors.OKGREEN}{log_name} OK: new provider was inserted into the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}{log_name} OK: new provider was inserted into the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
   elif (status_code == 409):
-    print(f"{bcolors.WARNING}{log_name}: This name already exist!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.WARNING}{log_name}: This name already exist!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
   else:
-    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 0
 
 def test_put_provider():
-  req = requests.put(f"{url}/api/provider/10001?new_provider=mdagfgda")
+  payload = {'new_provider':'MosheTapuzima'} # because its send it with form
+  req = requests.put(f"{url}/api/provider/10001", data=payload)
   log_name = "PUT(UPDATE) PROVIDER"
   status_code = req.status_code
   if ((status_code >= 200 and status_code < 299) and status_code != 409):
-    print(f"{bcolors.OKGREEN}{log_name}: name is changed in the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}{log_name}: name is changed in the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
   elif (status_code == 409): 
-    print(f"{bcolors.WARNING}{log_name}: This name already exist!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.WARNING}{log_name}: This name already exist!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
   else:
-    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 0
 
 def test_post_truck():
@@ -81,13 +82,13 @@ def test_post_truck():
   log_name = "POST TRUCK"
   status_code = req.status_code
   if ((status_code >= 200 and status_code < 299) and status_code != 409):
-    print(f"{bcolors.OKGREEN}{log_name} OK: new truck was inserted into the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}{log_name} OK: new truck was inserted into the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
   elif (status_code == 409): 
-    print(f"{bcolors.WARNING}{log_name}: Provider not found or truck id already exist, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.WARNING}{log_name}: Provider not found or truck id already exist, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
   else:
-    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 0
 
 def test_put_truck():
@@ -96,13 +97,13 @@ def test_put_truck():
   log_name = "PUT(UPDATE) TRUCK"
   status_code = req.status_code
   if ((status_code >= 200 and status_code < 299) and status_code != 409):
-    print(f"{bcolors.OKGREEN}{log_name} OK: provider id is changed in the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}{log_name} OK: provider id is changed in the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
   elif (status_code == 409): 
-    print(f"{bcolors.WARNING}{log_name}: Provider not found or truck id already exist, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.WARNING}{log_name}: Provider not found or truck id already exist, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
   else:
-    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 0
 
 def test_get_truck():
@@ -110,13 +111,13 @@ def test_get_truck():
   log_name = "GET TRUCK"
   status_code = req.status_code
   if ((status_code >= 200 and status_code < 299) and status_code != 409):
-    print(f"{bcolors.OKGREEN}{log_name} OK!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}{log_name} OK!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
   elif (status_code == 409): 
-    print(f"{bcolors.WARNING}{log_name}: 'from' or 'to' date is not valid, please try again!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.WARNING}{log_name}: 'from' or 'to' date is not valid, please try again!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
   else:
-    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 0
 
 
@@ -125,10 +126,10 @@ def test_post_rates():
   log_name = "POST RATES"
   status_code = req.status_code
   if (status_code < 200 or status_code > 299):
-    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 0
   else:
-    print(f"{bcolors.OKGREEN}{log_name} OK!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}{log_name} OK!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
 
 def test_get_rates():
@@ -136,10 +137,10 @@ def test_get_rates():
   log_name = "GET RATES"
   status_code = req.status_code
   if (status_code < 200 or status_code > 299):
-    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 0
   else:
-    print(f"{bcolors.OKGREEN}{log_name} OK!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}{log_name} OK!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
 
 def test_get_bill():
@@ -147,22 +148,27 @@ def test_get_bill():
   log_name = "GET BILL"
   status_code = req.status_code
   if (status_code < 200 or status_code > 299):
-    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 0
   else:
-    print(f"{bcolors.OKGREEN}{log_name} OK!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}{log_name} OK!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}\n")
     return 1
 
  
 
 def test():
   functions = [test_health, test_post_provider, test_put_provider, test_post_truck, test_put_truck, test_get_truck, test_post_rates, test_get_rates, test_get_bill]
+  arr = []
   for func in functions:
     if not func():
+      arr.append(func)
       sys.stdout.write(f'ERROR ==> {func.__name__}\n')
     sleep(0.17)
-
-  sys.stdout.write('SUCCESS!\n')
+  
+  if not arr:
+    sys.stdout.write('SUCCESS')
 
 if __name__ == '__main__':
   test()
+      
+
