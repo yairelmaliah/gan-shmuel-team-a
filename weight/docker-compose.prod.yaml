@@ -1,7 +1,12 @@
 version: '3'
 services:
   weight_app:
+    volumes:
+      - /home/ubuntu/volumes/in-weight:/app/in  
     ports:
       - "8081:8081"
+  sql:
+    volumes:
+      - /home/ubuntu/volumes/sql-weight/weightdb.sql:/docker-entrypoint-initdb.d/weightdb.sql
 
 # docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up --build

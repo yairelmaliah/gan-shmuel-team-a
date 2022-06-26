@@ -6,12 +6,14 @@ services:
       - "8083:8081"
     environment: 
       TEST_DB: "true"
+    volumes:
+      - /home/ubuntu/volumes/in-weight:/app/in
     container_name: weight_app_test
   sql_test:
     image: mysql:5.7
     volumes:
       - mysql-weight-data-test:/var/lib/mysql
-      - ./db/weightdb.sql:/docker-entrypoint-initdb.d/weightdb.sql
+      - /home/ubuntu/volumes/sql-weight/weightdb.sql:/docker-entrypoint-initdb.d/weightdb.sql
     environment:
       - MYSQL_ROOT_PASSWORD=1234
     container_name: sql_test
@@ -19,4 +21,4 @@ services:
 volumes:
   mysql-weight-data-test:
 
-# docker-compose -f docker-compose.test.yaml up --build
+# docker-compose -p test-weight -f docker-compose.test.yaml up --build
