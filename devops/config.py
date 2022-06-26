@@ -43,7 +43,7 @@ CONTACT_EMAILS = {
 HEADING_SUCCESS = 'All tests passed successfully!'
 HEADING_FAILURE = 'Some tests have failed. Please check!'
 
-TEST_TMP_PATH = "/tmp/gan-shmuel-app"
+TEST_TMP_PATH = "/test-env/gan-shmuel-app"
 
 TEST_CONTAINERS_NAMES = {
     "weight": "weight_app_test sql_test",

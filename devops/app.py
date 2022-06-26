@@ -19,7 +19,9 @@ def build_app(data):
         leader_email = CONTACT_EMAILS[f'{branch_name}_team']["team_members"][CONTACT_EMAILS[f'{branch_name}_team']["team_leader"]]
         pusher_email = CONTACT_EMAILS[f'{branch_name}_team']["team_members"][pusher_github_name]
     except:
-        print(f"Pusher email not exist in our system please add him --> {pusher_github_name}", flush=True)
+        print(f"Pusher email: '{pusher_github_name}' not exist in branch: '{branch_name}' list, please add him", flush=True)
+        leader_email = "yairelmaliah"
+        pusher_email = "yairelmaliah"
 
     # Remove previous test clone, and clone new changes
     os.system(f'rm -rf {TEST_TMP_PATH}')
@@ -66,7 +68,8 @@ def build_app(data):
 
         # Abort
         exit(0)
-    
+        
+    print("FINISHED SUCCESFULLY")
     exit(1)
 
 
