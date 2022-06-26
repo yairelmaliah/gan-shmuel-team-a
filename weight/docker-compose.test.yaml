@@ -1,5 +1,6 @@
 version: '3'
 services:
+
   weight_app_test:
     build: ./app
     ports:
@@ -9,6 +10,7 @@ services:
     volumes:
       - /home/ubuntu/volumes/in-weight:/app/in
     container_name: weight_app_test
+
   sql_test:
     image: mysql:5.7
     volumes:
