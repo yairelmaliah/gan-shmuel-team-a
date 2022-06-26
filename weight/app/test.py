@@ -1,3 +1,4 @@
+import time
 import requests
 import sys
 
@@ -49,6 +50,7 @@ def test():
   functions = [test_health, test_get_unknown, test_get_item, test_batch_weight, test_get_weight]
   arr = []
   for func in functions:
+    time.sleep(0.2)
     if not func():
       arr.append(func)
       sys.stdout.write(f'ERROR ==> {func.__name__}')
