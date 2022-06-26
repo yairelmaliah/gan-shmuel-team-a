@@ -21,9 +21,13 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route("/api/health", methods=['GET','POST'])
+def get_health():
+    return "OK", 200
+
 @app.route("/health", methods=['GET','POST'])
 def health():
-    return "OK", 200
+    return render_template('health.html')
 
 # @app.route("/health")
 # def health_web():
