@@ -4,7 +4,7 @@ def get_session_handler(id):
   mysql = Mysql()
   session = mysql.get_data(f"SELECT * from transactions WHERE id={id} order by datetime desc limit 1")
   if not session:
-    return "Invalid session ID", 404
+    return {"data": "Invalid session ID"}, 404
 
   if session[0][2] == 'out':
     return {

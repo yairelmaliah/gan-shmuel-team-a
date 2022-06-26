@@ -31,8 +31,8 @@ def get_weight_handler(args):
         })
 
     if not arr:
-      return "There is No weight at the moment" , 404
+      return {"data": "There are No weight at this timeframe"} , 404
 
     return {"data" : arr}, 200
   except:
-    return "Something is wrong with the request, check args again"
+    return {"data": "Something is wrong with the request, check args again"}, 500

@@ -51,7 +51,7 @@ def test_post_provider():
   req = requests.post(f"{url}/api/provider", data=payload)
   status_code = req.status_code
   if ((status_code >= 200 and status_code < 299) and status_code != 409): 
-    print(f"{bcolors.OKGREEN}{log_name} SUCCESSFUL: new provider was inserted into the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}{log_name} OK: new provider was inserted into the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
     return 1
   elif (status_code == 409):
     print(f"{bcolors.WARNING}{log_name}: This name already exist!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
@@ -75,11 +75,13 @@ def test_put_provider():
     return 0
 
 def test_post_truck():
-  req = requests.post(f"{url}/api/truck?provider_id=10009&truck_id=200-10-300")
+  # req = requests.post(f"{url}/api/truck?provider_id=10009&truck_id=200-10-300")
+  payload = {'provider_id':'10009', 'truck_id':'200-10-300'} # because its send it with form
+  req = requests.post(f"{url}/api/truck", data=payload)
   log_name = "POST TRUCK"
   status_code = req.status_code
   if ((status_code >= 200 and status_code < 299) and status_code != 409):
-    print(f"{bcolors.OKGREEN}{log_name} SUCCESSFUL: new truck was inserted into the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}{log_name} OK: new truck was inserted into the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
     return 1
   elif (status_code == 409): 
     print(f"{bcolors.WARNING}{log_name}: Provider not found or truck id already exist, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
@@ -89,11 +91,12 @@ def test_post_truck():
     return 0
 
 def test_put_truck():
-  req = requests.put(f"{url}/truck/200-10-300?provider_id=10001")
+  payload = {'provider_id':'10001'} # because its send it with form
+  req = requests.put(f"{url}/truck/200-10-300", data=payload)
   log_name = "PUT(UPDATE) TRUCK"
   status_code = req.status_code
   if ((status_code >= 200 and status_code < 299) and status_code != 409):
-    print(f"{bcolors.OKGREEN}{log_name} SUCCESSFUL: provider id is changed in the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}{log_name} OK: provider id is changed in the Database, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
     return 1
   elif (status_code == 409): 
     print(f"{bcolors.WARNING}{log_name}: Provider not found or truck id already exist, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
@@ -101,6 +104,21 @@ def test_put_truck():
   else:
     print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
     return 0
+
+def test_get_truck():
+  req = requests.get(f"{url}/truck/155-34-443?from=20210311203010&to=20230311203010")
+  log_name = "GET TRUCK"
+  status_code = req.status_code
+  if ((status_code >= 200 and status_code < 299) and status_code != 409):
+    print(f"{bcolors.OKGREEN}{log_name} OK!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    return 1
+  elif (status_code == 409): 
+    print(f"{bcolors.WARNING}{log_name}: 'from' or 'to' date is not valid, please try again!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    return 1
+  else:
+    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    return 0
+
 
 def test_post_rates():
   req = requests.post(f"{url}/api/rates/rates.xlsx")
@@ -124,15 +142,27 @@ def test_get_rates():
     print(f"{bcolors.OKGREEN}{log_name} OK!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
     return 1
 
+def test_get_bill():
+  req = requests.get(f"{url}/bill/10002?from=20210311203010&to=20230311203010")
+  log_name = "GET BILL"
+  status_code = req.status_code
+  if (status_code < 200 or status_code > 299):
+    print(f"{bcolors.FAIL}{log_name} ERROR: Oh, Something went wrong!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    return 0
+  else:
+    print(f"{bcolors.OKGREEN}{log_name} OK!, {bcolors.HEADER}status code: {req}{bcolors.ENDC}")
+    return 1
+
+ 
 
 def test():
-  functions = [test_health, test_post_provider, test_put_provider, test_post_truck, test_put_truck, test_post_rates, test_get_rates]
+  functions = [test_health, test_post_provider, test_put_provider, test_post_truck, test_put_truck, test_get_truck, test_post_rates, test_get_rates, test_get_bill]
   for func in functions:
     if not func():
-      sys.stdout.write(f'ERROR ==> {func.__name__}')
-    sleep(0.2)
+      sys.stdout.write(f'ERROR ==> {func.__name__}\n')
+    sleep(0.17)
 
-  sys.stdout.write('SUCCESS')
+  sys.stdout.write('SUCCESS!\n')
 
 if __name__ == '__main__':
   test()

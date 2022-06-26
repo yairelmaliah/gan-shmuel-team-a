@@ -1,6 +1,54 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      body {
+        font-family: 'Lato', sans-serif;
+      }
+      .sidenav {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
+      }
+
+      .sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+      }
+
+      .sidenav a:hover {
+        color: #f1f1f1;
+      }
+      .main {
+        margin-left: 210px; /* Same as the width of the sidenav */
+        font-size: 35px; /* Increased text to enable scrolling */
+        padding: 5px 20px;
+        color: darkgreen;
+      }
+    </style>
+  </head>
   <body>
-    <h1>I am health</h1>
+    <div class="sidenav">
+      <a href="/"> <i class="fa fa-home"></i> Home </a>
+      <a href="{{ url_for('ui_get_health') }}"> <i class="fa fa-home"></i> Health Check </a>
+      <a href="{{ url_for('ui_get_weight') }}"> <i class="fa fa-home"></i> Get Weight </a>
+      <a href="{{ url_for('ui_post_weight') }}"> <i class="fa fa-home"></i> Post Weight </a>
+      <a href="{{ url_for('ui_get_session') }}"> <i class="fa fa-home"></i> Get Session </a>
+      <a href="{{ url_for('ui_get_item') }}"> <i class="fa fa-home"></i> Get Item </a>
+      <a href="{{ url_for('ui_get_unknown') }}"> <i class="fa fa-home"></i> Get Unknown </a>
+    </div>
+
+    <div class="main">
+      <h2>Welcome to Kibbutz Gan Shmuel</h2>
+    </div>
   </body>
 </html>
