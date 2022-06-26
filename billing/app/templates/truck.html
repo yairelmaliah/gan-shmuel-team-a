@@ -1,72 +1,156 @@
+<!DOCTYPE html>
 <html>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-      function room() {
-        var room = window.location.href.substring(window.location.href.lastIndexOf('/')+1);
-        return "/api/"+room;
-      }
-      function updateChat() {
-        $.get(room(),function(data) {
-          $("#chatbox").text(data);
-          window.setTimeout(updateChat,15000);
-        })
-      }
-  
-      function sendmessage() {
-        $.post( room(), $( "#inform" ).serialize());
-      }
-  
-      $(document).ready(function() {
-        $("#chatbox").text("Loading Providers...");
-        $("#sendBtn").click(sendmessage)
-        // $("#sendBtn").click(makeRequestt)
+        function room() {
+          var room = window.location.href.substring(window.location.href.lastIndexOf('/')+1);
+          return "/api/truck"+room;
+        }
         
-        window.setTimeout(updateChat,15000);
-      });
-  
+        // function updateChat() {
+        //   $.get(room(),function(data) {
+        //     $("#chatbox").text(data);
+        //     window.setTimeout(updateChat,15000);
+        //   })
+        // }
+
+        // let data = {
+        //   name: 'Sammy'
+        // }
+        // async function start() {
+        //   var my_url = "http://localhost:5000/api/truck";
+        //   let response = await fetch(`${my_url}`, {method: "POST"});
+        //   console.log(response)
+        //   let data = await response.json()
+        //   console.log(data)
+        //  // let text = JSON.stringify(data) // read response body as text
+        //   alert(text)
+        // }
+            setTimeout(function() {
+              $("input[id='provider_id']").val("10009")
+              $("input[id='truck_id']").val("200-10-300")
+            }, 100); 
+          $(document).ready(function() {
+            $('#sendBtn').click(function () {
+                var provider_id = $('#provider_id').val();
+                var truck_id = $('#truck_id').val();
+                const  str = "api/truck"
+                // console.log("id: ", truck_id())
+                // console.log("num: " + truck_number())
+                $.ajax({
+                    url: str ,     //Your api url
+                    type: 'POST',   //type is any HTTP method
+                    data:
+                      {
+                        provider_id:provider_id,
+                        truck_id:truck_id,
+                    },
+                    success: function (data, textStatus, xhr) {
+                      // console.log(data)
+                      // const lastSegment = data.split("")
+                      // let idnumber = lastSegment[lastSegment.length + 1];
+                      // console.log(idnumber)
+                      // console.log(textStatus)
+                      // console.log(xhr.status)
+                      alert(data)
+                    },
+                    error: function (data, textStatus, xhr) {
+                      if (data.status === 409) {
+                        alert(data.responseText)
+                      }
+                      // console.log(data.responseText) // response message
+                      // console.log(xhr.status)
+                    } 
+                })
+            });
+          });
+
+        // function sendmessage() {
+        //   // start()
+        //   $.post( room(), $( "#inform" ).serialize());
+        // }
+
+        // $(document).ready(function() {
+        //   $("input[name='provider_id']").val("10009")
+        //   $("input[name='truck_id']").val("200-10-300")
+
+        //   $("#chatbox").text("Loading Providers...");
+        //   $("#sendBtn").click(sendmessage)
+        //   // $("#sendBtn").click(makeRequestt)
+          
+        //   window.setTimeout(updateChat,15000);
+        // });
+
     </script>
-    <head>
-    </head>
+<head>
+<title>Trucks</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+<link rel="stylesheet" href="../static/stlye.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1 {font-family: "Raleway", Arial, sans-serif}
+h1 {letter-spacing: 6px}
+.w3-row-padding img {margin-bottom: 12px}
+</style>
+</head>
+<body>
 
-    <body>
-      <nav class="headNev">
-        <a class="headNevLink1" href="/">  <i>Index</i></a>
-        <a class="headNevLink2" href="/health">Health </a>
-        <a class="headNevLink1" href="/provider">Provider</a>
-        <a class="headNevLink1" href="/provider_id">Update Provider</a>
-        <a class="headNevLink2" href="/rates">Rates</a>
-        <a class="headNevLink1" href="/truck">Trucks </a>
-        <a class="headNevLink2" href="/bill">Bills </a>
-    </nav>
+<!-- !PAGE CONTENT! -->
+<div class="w3-content" style="max-width:1500px">
+
+<!-- Header -->
+<header class="w3-panel w3-center w3-opacity" style="padding:8px 16px">
+  <h1 class="w3-xlarge">Welcome To Kibbutz Gam-Shmuel</h1>
+  <h1>A-Billing Services</h1>
+  <h8>By: Rotem Kalman, Oshri Zafrani, Asres Frede</h8>
   
-    <div class="contentBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray">
-      
-        <h3>Registers a truck in the system: </h3>
-      <form id="inform" action="/api/truck" method="POST">
-        <b>write provider id below : </b> <br> <input name="provider_id" type=text >
-        <br>
-        <br>
-        <b>write truck license plate below : </b> <br> <input name="truck_license" type=text >
-        <br>
-        <br>
-        <input id="sendBtn" type="button" value="submit">
-      </form>
-    
+  <div class="w3-padding-32">
+    <div class="w3-bar w3-border">
+      <a href="/" class="w3-bar-item w3-button">Home</a>
+      <a href="/health" class="w3-bar-item w3-button w3-light-grey">Health</a>
+      <a href="/provider" class="w3-bar-item w3-button w3-hide-small">Provider</a>
+      <a href="/truck" class="w3-bar-item w3-button w3-hide-small">Trucks</a>
+      <a href="/rates" class="w3-bar-item w3-button w3-hide-small">Rates</a>
+      <a href="/bill" class="w3-bar-item w3-button w3-hide-small">Bill</a>
     </div>
-
-    <div class="contentBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray">
-      <h2 id="providers_number"></h2>
-  <h3> enter dates:</h3>
- <a hidden>Link <a href="" id=lnk> </a>
-<br>
-<input type='text' id='t1'/>
-<input type='text' id='t2'/>
-<input type='button' value="submit"/>
-  </a>
   </div>
-<div class="imageBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray;z-index: 0;">
-    
-</div>
-    </body>
+</header>
 
-  </html>
+<!-- Photo Grid -->
+<div class="w3-row-padding-32" style="margin-bottom:80px">
+  <div class="w3-panel w3-center" style="padding:1px 1px">
+      <h3>Enter a new provider's truck: </h3>
+      <br>
+      <div class="truck-form">
+        <form id="inform" action="/api/truck" method="POST">
+          <b>Provider id: </b> <br> <input id="provider_id" type=text >
+          <br>
+          <br>
+          <b>Truck license plate: </b> <br> <input id="truck_id" type=text >
+          <br>
+          <input id="sendBtn" type="button" value="submit">
+          <br>
+        </form>
+        <a href="/truck/200-10-300/"><button class="update-provider">update truck</button></a>
+      </div>
+      <!-- <button class="update-provider">update provider</button> -->
+  </div>
+</div>
+
+  
+<!-- End Page Content -->
+</div>
+  
+<!-- End Page Content -->
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-61 w3-light-grey w3-center w3-medium"> 
+  <h8>A-Billing services by <a href="/" target="_blank" class="w3-hover-text-green">Oshri Zafrani, Rotem Kalman, Asres Frede </a></h8>
+</footer>
+
+</body>
+</html>

@@ -6,14 +6,14 @@ from db_utils import db_utils
 mysql = db_utils()
 
 def data_exist(): # get data from the db and check if name exist in the 'Provider' table
-    provider_name = request.form['provider']
+    provider_name = request.form['provider_id']
     name = mysql.getData(f"SELECT * from Provider WHERE name=('{provider_name}')")
     json_str = json.dumps(name)
     resp = json.loads(json_str)
     return resp[0]['name']
 
 def push_new_provider(): # insert new name to the Database
-    provider = request.form['provider']
+    provider = request.form['provider_id']
     data_insert = f"INSERT INTO Provider (name) VALUES ('{provider}');"
     mysql.setData(data_insert)
     id = mysql.getData("SELECT id FROM Provider ORDER BY id DESC LIMIT 1;")

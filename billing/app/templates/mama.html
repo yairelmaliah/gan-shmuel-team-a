@@ -1,0 +1,72 @@
+<html>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      function room() {
+        var room = window.location.href.substring(window.location.href.lastIndexOf('/')+1);
+        return "/api/"+room;
+      }
+      function updateChat() {
+        $.get(room(),function(data) {
+          $("#chatbox").text(data);
+          window.setTimeout(updateChat,15000);
+        })
+      }
+  
+      function sendmessage() {
+        $.post( room(), $( "#inform" ).serialize());
+      }
+  
+      $(document).ready(function() {
+        $("#chatbox").text("Loading Providers...");
+        $("#sendBtn").click(sendmessage)
+        // $("#sendBtn").click(makeRequestt)
+        
+        window.setTimeout(updateChat,15000);
+      });
+  
+    </script>
+    <head>
+    </head>
+
+    <body>
+      <nav class="headNev">
+        <a class="headNevLink1" href="/">  <i>Index</i></a>
+        <a class="headNevLink2" href="/health">Health </a>
+        <a class="headNevLink1" href="/provider">Provider</a>
+        <a class="headNevLink1" href="/provider_id">Update Provider</a>
+        <a class="headNevLink2" href="/rates">Rates</a>
+        <a class="headNevLink1" href="/truck">Trucks </a>
+        <a class="headNevLink2" href="/bill">Bills </a>
+    </nav>
+  
+    <div class="contentBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray">
+      
+        <h3>Registers a truck in the system: </h3>
+      <form id="inform" action="/api/truck" method="POST">
+        <b>write provider id below : </b> <br> <input name="provider_id" type=text >
+        <br>
+        <br>
+        <b>write truck license plate below : </b> <br> <input name="truck_license" type=text >
+        <br>
+        <br>
+        <input id="sendBtn" type="button" value="submit">
+      </form>
+    
+    </div>
+
+    <div class="contentBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray">
+      <h2 id="providers_number"></h2>
+  <h3> enter dates:</h3>
+ <a hidden>Link <a href="" id=lnk> </a>
+<br>
+<input type='text' id='t1'/>
+<input type='text' id='t2'/>
+<input type='button' value="submit"/>
+  </a>
+  </div>
+<div class="imageBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray;z-index: 0;">
+    
+</div>
+    </body>
+
+  </html>
