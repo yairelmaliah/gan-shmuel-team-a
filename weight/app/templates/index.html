@@ -6,7 +6,7 @@
         margin: 27px auto 0;
 
         position: relative;
-        width: 990px;
+        width: 1200px;
         height: 50px;
         border-radius: 8px;
         font-size: 0;
@@ -49,9 +49,15 @@
       }
 
       a:nth-child(6) {
-        width: 120px;
-      }      a:nth-child(7) {
-        width: 120px;
+        width: 150px;
+      }      
+      
+      a:nth-child(7) {
+        width: 150px;
+      }
+
+      a:nth-child(8) {
+        width: 150px;
       }
 
 
@@ -94,6 +100,7 @@
       <a href="{{ url_for('ui_get_health') }}">Health Check</a>
       <a href="{{ url_for('ui_get_weight') }}">Get Weight</a>
       <a href="{{ url_for('ui_post_weight') }}">Post Weight</a>
+      <a href="{{ url_for('ui_batch_weight') }}">Batch Weight</a>
       <a href="{{ url_for('ui_get_session') }}">Get Session</a>
       <a href="{{ url_for('ui_get_item') }}">Get Item</a>
       <a href="{{ url_for('ui_get_unknown') }}">Get Unknown</a>
