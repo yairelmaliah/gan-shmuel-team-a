@@ -2,53 +2,102 @@
 <html>
   <head>
     <style>
-      body {
-        font-family: 'Lato', sans-serif;
+      nav {
+        margin: 27px auto 0;
+
+        position: relative;
+        width: 990px;
+        height: 50px;
+        border-radius: 8px;
+        font-size: 0;
       }
-      .sidenav {
+      nav a {
+        line-height: 80px;
         height: 100%;
-        width: 200px;
-        position: fixed;
+        font-size: 15px;
+        display: inline-block;
+        position: relative;
         z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #111;
-        overflow-x: hidden;
-        padding-top: 20px;
-      }
-
-      .sidenav a {
-        padding: 6px 8px 6px 16px;
         text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
+        text-transform: uppercase;
+        text-align: center;
+        color: white;
+        cursor: pointer;
+      }
+      nav .animation {
+        position: absolute;
+        height: 100%;
+        top: 0;
+        z-index: 0;
+        transition: all 0.5s ease 0s;
+        border-radius: 8px;
+      }
+      a:nth-child(1) {
+        width: 150px;
+      }
+      a:nth-child(2) {
+        width: 150px;
+      }
+      a:nth-child(3) {
+        width: 150px;
+      }
+      a:nth-child(4) {
+        width: 150px;
+      }
+      a:nth-child(5) {
+        width: 150px;
       }
 
-      .sidenav a:hover {
-        color: #f1f1f1;
+      a:nth-child(6) {
+        width: 120px;
+      }      a:nth-child(7) {
+        width: 120px;
       }
-      .main {
-        margin-left: 210px; /* Same as the width of the sidenav */
-        font-size: 35px; /* Increased text to enable scrolling */
-        padding: 5px 20px;
-        color: darkgreen;
+
+
+      body {
+        font-size: 12px;
+        font-family: sans-serif;
+        background: #2c3e50;
+      }
+      h1 {
+        text-align: center;
+        margin: 40px 0 40px;
+        text-align: center;
+        font-size: 30px;
+        color: #ecf0f1;
+        text-shadow: 2px 2px 4px #000000;
+        font-family: 'Cherry Swash', cursive;
+      }
+
+      p {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+        color: #ecf0f1;
+        font-family: 'Cherry Swash', cursive;
+        font-size: 16px;
+      }
+      a:hover {
+        color: #7b7b7b;
+      }
+      span {
+        color: #2bd6b4;
       }
     </style>
   </head>
   <body>
-    <div class="sidenav">
-      <a href="/"> <i class="fa fa-home"></i> Home </a>
-      <a href="{{ url_for('ui_get_health') }}"> <i class="fa fa-home"></i> Health Check </a>
-      <a href="{{ url_for('ui_get_weight') }}"> <i class="fa fa-home"></i> Get Weight </a>
-      <a href="{{ url_for('ui_post_weight') }}"> <i class="fa fa-home"></i> Post Weight </a>
-      <a href="{{ url_for('ui_get_session') }}"> <i class="fa fa-home"></i> Get Session </a>
-      <a href="{{ url_for('ui_get_item') }}"> <i class="fa fa-home"></i> Get Item </a>
-      <a href="{{ url_for('ui_get_unknown') }}"> <i class="fa fa-home"></i> Get Unknown </a>
-    </div>
-
-    <div class="main">
-      <h2>Welcome to Kibbutz Gan Shmuel</h2>
-    </div>
+    <h1>Welcome to Kibbutz Gan Shmuel - Weight System</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="{{ url_for('ui_get_health') }}">Health Check</a>
+      <a href="{{ url_for('ui_get_weight') }}">Get Weight</a>
+      <a href="{{ url_for('ui_post_weight') }}">Post Weight</a>
+      <a href="{{ url_for('ui_get_session') }}">Get Session</a>
+      <a href="{{ url_for('ui_get_item') }}">Get Item</a>
+      <a href="{{ url_for('ui_get_unknown') }}">Get Unknown</a>
+      <div class="animation start-home"></div>
+    </nav>
   </body>
 </html>
