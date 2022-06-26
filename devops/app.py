@@ -12,7 +12,8 @@ def build_app(data):
     pusher_github_name = data["pusher"]["name"]
     
     if branch_name not in BRANCHES_ALLOWED:
-        return "Branch is not allowed, abort...", 405
+        print("Branch is not allowed, abort...", flush=True)
+        return "Not allowed", 405
 
     # Generate emails according to branch and pusher
     try:
