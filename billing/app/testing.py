@@ -46,7 +46,7 @@ def test_health():
     return 1
   
 def test_post_provider():
-  payload = {'provider':'fgrttt'} # because its send it with form
+  payload = {'provider_id':'fgrttt'} # because its send it with form
   log_name = "POST PROVIDER"
   req = requests.post(f"{url}/api/provider", data=payload)
   status_code = req.status_code
@@ -61,7 +61,8 @@ def test_post_provider():
     return 0
 
 def test_put_provider():
-  req = requests.put(f"{url}/api/provider/10001?new_provider=mdagfgda")
+  payload = {'new_provider':'MosheTapuzima'} # because its send it with form
+  req = requests.put(f"{url}/api/provider/10001", data=payload)
   log_name = "PUT(UPDATE) PROVIDER"
   status_code = req.status_code
   if ((status_code >= 200 and status_code < 299) and status_code != 409):
