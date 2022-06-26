@@ -1,9 +1,9 @@
-from flask import Flask , request
+from flask import Flask, render_template , request
 import os
 from config import *
 from run_tests import run_test
 from mailing import send_mail
-
+from monitor import portstatus
 app = Flask(__name__)
 
 def build_app(data):
@@ -83,6 +83,17 @@ def home():
 @app.route('/health', methods = ['GET'])
 def health():
     return "OK changed", 200
+
+@app.route('/monitor', methods = ['GET'])
+def monitor():
+    # results = portstatus()
+    return render_template("monitor.html")
+
+@app.route("/tmp/monitor.txt")
+def ports():
+    with app.open_resource('/tmp/monitor.txt') as f:
+        contents = f.read()
+    return contents
 
 @app.route('/webhook', methods = ['POST'])
 def webhook():
