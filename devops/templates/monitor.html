@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+    h1 {
+        text-align: center;
+        font-family: sans-serif;
+        font-size: 5rem;
+    }
+
+    .main {
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    .container {
+        border-radius: 70%;
+        display: inline-block;
+        height: 7rem;
+        width: 7rem;
+        position: relative;
+        margin: 3rem;
+    }
+
+    .inner-container {
+        background-color: white;
+        border-radius: 50%;
+        height: 9rem;
+        width: 9rem;
+        position: absolute;
+        top: 1.5rem;
+        left: 1.5rem;
+        text-align: center;
+        font-family: sans-serif;
+    }
+    hr.solid {
+  border-top: 3px solid #bbb;
+}
+.vl {
+  border-left: 3px solid green;
+  height: 100px;
+}
+    
+    </style>
+    <title>Project Monitor</title>
+</head>
+<body>
+    <h1>Project Monitor</h1>
+
+    <div class="main">
+        <div class="container" id="8080">
+            <div class="inner-container">
+                <h3>8080</h3>
+                <h3>billing</h3>
+            </div>
+
+        </div>
+
+        <div class="container" id="8081">
+            <div class="inner-container">
+                <h3>8081</h3>
+                <h3>weight</h3>
+            </div>
+        </div>
+        <div class="container" id="8082">
+            <div class="inner-container">
+                <h3>8082</h3>
+                <h3>devops</h3>
+            </div>
+
+        </div>
+        <hr class="solid">
+        <div class="container" id="8083">
+            <div class="inner-container">
+                <h3>8083</h3>
+                <h3>testing weight</h3>
+            </div>
+        </div>
+        <div class="container" id="8084">
+            <div class="inner-container">
+                <h3>8084</h3>
+                <h3>testing billing</h3>
+            </div>
+        </div>
+
+    </div> 
+    <script>
+        fetch('/tmp/monitor.txt')
+        .then(response => response.text())
+        .then(data => {
+          console.log(data)
+              for(let i=0 ; i<=10 ; i+=2) {
+                  let port = 8080 + (i/2);
+                  if(data[i] == "opened") {
+                      document.getElementById(port).style.backgroundColor = "#00D100";
+                  } else {
+                      document.getElementById(port).style.backgroundColor = "#FF2E2E";
+                  }
+              }
+            }
+            );
+     
+        </script>
+</body>
+</html>
