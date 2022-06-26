@@ -12,19 +12,18 @@ CONTACT_EMAILS = {
         "team_leader": "yairelmaliah",
         "team_members": {
             "yairelmaliah": "yairelmaliah319732@gmail.com",
-            "davidab265": "",
+            "davidab265": "9200200@gmail.com",
             "Gologolo97": "lejbgolovaty@yahoo.com"
         }
     },
 
     "billing_team": {
-        # "team_leader": "RotemK1",
-        "team_leader": "yairelmaliah",
+        "team_leader": "RotemK1",
         "team_members": {
             "yairelmaliah": "yairelmaliah319732@gmail.com",
             "RotemK1": "kalmanrotem@gmail.com",
-            "asi111": "",
-            "oshriza": ""
+            "asi111": "asrasfarada@gmail.com",
+            "oshriza": "oshriza@gmail.com"
         }
     },
 
