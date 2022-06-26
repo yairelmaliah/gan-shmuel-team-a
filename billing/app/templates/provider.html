@@ -39,6 +39,10 @@
     //   // $.post( room(), $( "#inform" ).serialize());
     //   // console.log($("input[name='provider']").val());
     // }
+    setTimeout(function(){
+        $("input[id='provider_id']").val("Moshe-Tapuzim");
+
+      }, 100); 
     $(document).ready(function() {
           $('#sendBtn').click(function () {
               var provider_id = $('#provider_id').val();
