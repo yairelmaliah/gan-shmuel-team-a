@@ -7,48 +7,14 @@
       return "/api/"+room;
     }
     
-    // function updateChat() {
-    //   $.get(room(),function(data) {
-    //     $("#chatbox").text(data);
-    //     window.setTimeout(updateChat,15000);
-    //   })
-    // }
-  //   function required(inputtx) 
-  //  {
-  //    if (inputtx.value.length == 0)
-  //     { 
-  //        alert("message");  	
-  //        return false; 
-  //     }  	
-  //     return true; 
-  //   } 
-
-    // function sendmessage() {
-    //   // var myRequest = new Request('api/provider');
-
-    //   // fetch(myRequest, {method: "GET"}).then(function(response) {
-    //   //   console.log(response.status); // returns 200
-
-    //   // });
-    //   if ($("input[name='provider']").val() == 0) {
-    //     alert("Please enter a valid provider name")
-    //   } else {
-    //     $.post( room(), $( "#inform" ).serialize());
-    //     alert($("input[name='provider']").val() + " inserted into the Database")
-    //   }
-    //   // $.post( room(), $( "#inform" ).serialize());
-    //   // console.log($("input[name='provider']").val());
-    // }
     setTimeout(function(){
         $("input[id='provider_id']").val("Moshe-Tapuzim");
 
-      }, 100); 
+      }, 150); 
     $(document).ready(function() {
           $('#sendBtn').click(function () {
               var provider_id = $('#provider_id').val();
               const  str = "api/provider"
-              // console.log("id: ", truck_id())
-              // console.log("num: " + truck_number())
               $.ajax({
                   url: str ,     //Your api url
                   type: 'POST',   //type is any HTTP method
@@ -56,13 +22,9 @@
                     {provider_id:provider_id
                   },
                   success: function (data, textStatus, xhr) {
-                    // console.log(data)
-                    // const lastSegment = data.split("")
-                    // let idnumber = lastSegment[lastSegment.length + 1];
-                    // console.log(idnumber)
-                    // console.log(textStatus)
-                    // console.log(xhr.status)
-                    alert(provider_id + " added!")
+                    alert(
+                      provider_id + " added!, " + xhr.responseText
+                    )
                   },
                   error: function (data, textStatus, xhr) {
                     if (data.status === 409) {
@@ -84,7 +46,18 @@
       
     //   window.setTimeout(updateChat,15000);
     // });
-
+      // window.onload = function () {
+      //     var form = document.getElementById('inform');
+      //     form.button.onclick = function () {
+      //         for(var i=0; i < form.elements.length; i++) {
+      //           if(form.elements[i].value === '' && form.elements[i].hasAttribute('required')){
+      //               alert('There are some required fields!');
+      //               return false;
+      //           }
+      //         }
+      //         // form.submit();
+      //     }; 
+      // };
   </script>
 <head>
 <title>Providers</title>
@@ -131,7 +104,7 @@ h1 {letter-spacing: 6px}
       <br>
       <div class="contentBlock">
         <form id="inform" action="/api/provider" method="POST">
-          <b>New provider : </b> <br> <input id="provider_id" type=text>
+          <b>New provider : </b> <br> <input id="provider_id" type=text required>
           <br>
           <input id="sendBtn" type="button" value="submit">
           <br>

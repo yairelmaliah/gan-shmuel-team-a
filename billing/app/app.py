@@ -40,20 +40,13 @@ def health():
 ########### Providers ####################
 
 
-
-#### POST PROVIDER
-
 @app.route("/api/provider", methods=['POST'])
 def post_api_provider():
     return POST_provider()
 
-
-@app.route("/provider", methods=['POST'])
-def post_provider():
-    return POST_provider()
-
-
-### GET PROVIDER ###
+@app.route('/provider/<id>/', methods=['PUT'])
+def put_provider(id):
+    return PUT_provider(id)
 
 @app.route("/api/provider", methods=['GET'])
 def post_provider_render():
@@ -62,33 +55,6 @@ def post_provider_render():
 @app.route("/provider")
 def provider():
     return render_template('provider.html')
-    # return POST_provider()
-
-
-########### PUT PROVIDER ID ######
-
-@app.route('/api/provider/<id>/', methods=['PUT'])
-def put_api_provider(id):
-    return PUT_provider(id)
-
-
-@app.route('/provider/<id>/', methods=['PUT'])
-def put_provider(id):
-    return PUT_provider(id)
-
-
-# @app.route("/provider/<id>/", methods=['PUT'])
-# def put_provider_id(id):
-#         return PUT_provider(id)
-
-
-# @app.route("/api/provider/<id>/", methods=['GET'])
-# def put_provider_render():
-#     return render_template('provider_id.html')
-
-# @app.route("/providerid", methods=['GET','POST'])
-# def providerid():
-#     return render_template('provider_id.html')
 
 @app.route("/provider/<int:id>/")
 def provider_id(id):
@@ -97,149 +63,93 @@ def provider_id(id):
     else:
         return render_template('provider_id.html')
 
-# @app.route("/api/provider/<int:id>")
-# def provider_id(id):
-#     if request.method == 'POST':
-#         return 'Hello, {}!'.format(request.form['new_provider'])
-#     else:
-#         return '''
-
-
-#             <title>Does it work ?</title>
-#             <h1>PUT test</h1>
-#             <form action=http://localhost:5000/api/provider/10003 method=post>
-#                 <input type=text name=new_provider>
-#                 <input id="sendBtn" type=submit value=try>
-#             </form>
-#         '''
-
 
 ############################################
 ################### Trucks #################
-
-
-## POST TRUCK ####
-@app.route("/api/truck", methods=['POST'])
-def post_api_truck():
-    return POST_truck()
-
-
-@app.route("/truck", methods=['POST'])
-def post_truck():
-    return POST_truck()
-
-### GET TRUCK ###
-
-@app.route("/api/truck", methods=['GET'])
-def post_api_truck_render():
-    return render_template('truck.html')
-
-
-@app.route("/truck", methods=['GET'])
-def post_truck_render():
-    return render_template('truck.html')
-
 
 @app.route("/truck")
 def truck():
     return render_template('truck.html')
 
+@app.route("/truck/update")
+def update_truck_id():
+    return render_template('truck_id.html')
 
-### PUT TRACK ID ###
+@app.route("/truck/fetch")
+def fetch_truck_id():
+    return render_template('truck_fetch.html')
 
-@app.route('/api/truck/<truck_id>/', methods=['PUT'])
+@app.route("/api/truck", methods=['POST'])
+def post_api_truck():
+    return POST_truck()
+
+@app.route('/truck/<truck_id>', methods=['PUT'])
 def put_api_truck(truck_id):
         return PUT_truck(truck_id)
 
-
-@app.route('/truck/<truck_id>/', methods=['PUT'])
-def put_truck(truck_id):
-        return PUT_truck(truck_id)
-
-### GET TRUCK ID ####
-
-# @app.route("/api/truck/<id>/", methods=['GET'])
-# def get_api_truck_id(id):
-#     return GET_truck(id)
-
-# @app.route("/truck/<id>/", methods=['GET'])
-# def get_func_truck_id(id):
-#     return GET_truck(id)
-
-# @app.route("/api/truck/<truck_id>/")
-# def get_api_func_truck_id():
-#     return render_template('truck_id.html')
-
-@app.route("/truck/<truck_id>/")
-def get_truck_id(truck_id):
-    return render_template('truck_id.html')
+@app.route('/truck/<truck_id>', methods=['GET'])
+def fetch_truck(truck_id):
+        return GET_truck(truck_id)
 
 
 #######################################################
 ################### RATES #############################
 
 
-### POST RATES ###
-
-
 @app.route("/api/rates/<file>", methods=['POST'])
 def api_rates(file):
    return POST_rates(file)
 
+@app.route("/api/rates", methods=['GET'])
+def fetch_rates():
+   return GET_rates()
 
-@app.route("/rates/<file>", methods=['POST'])
-def rates(file):
-   return POST_rates(file)
+@app.route("/rates")
+def get_rates_web():
+    return render_template('rates.html')
 
-@app.route("/api/rates/<file>")
-def rates_api_web():
-    return render_template('index.html')
+@app.route("/rates/fetch")
+def get_rates_message():
+    return render_template('rates_fetch.html')
 
-@app.route("/rates/<file>")
-def rates_web():
-    return render_template('index.html')
+# @app.route("/rates/<file>", methods=['POST'])
+# def rates(file):
+#    return POST_rates(file)
+
+# @app.route("/api/rates/<file>")
+# def rates_api_web():
+#     return render_template('index.html')
+
+# @app.route("/rates/<file>")
+# def rates_web():
+#     return render_template('index.html')
 
 
 #### GET RATES ###
 
-@app.route("/api/rates", methods=['GET'])
-def get_api_rates():
-   return GET_rates()
+# @app.route("/api/rates", methods=['GET'])
+# def get_api_rates():
+#    return GET_rates()
 
-@app.route("/rates", methods=['GET'])
-def get_rates():
-   return GET_rates()
+# @app.route("/rates", methods=['GET'])
+# def get_rates():
+#    return GET_rates()
 
-
-@app.route("/api/rates")
-def get_api_rates_web():
-    return render_template('index.html')
-
-@app.route("/rates")
-def get_rates_web():
-    return render_template('index.html')
-
+# @app.route("/api/rates")
+# def get_api_rates_web():
+#     return render_template('index.html')
 
 ####################################################
 ################# BILL #############################
-
-
-@app.route("/api/bill/<id>", methods=['GET'])
-def get_api_bill(id):
-   return GET_bill(id)
 
 @app.route("/bill/<id>", methods=['GET'])
 def get_bill(id):
    return GET_bill(id)
 
-@app.route("/api/bill/<id>")
-def get_render_bill():
-    return render_template('index.html')
 
-
-@app.route("/bill/<id>")
+@app.route("/bill")
 def get_render_bill_web():
-    return render_template('index.html')
+    return render_template('bill.html')
 
 
 

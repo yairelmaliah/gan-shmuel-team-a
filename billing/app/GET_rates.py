@@ -19,7 +19,7 @@ def GET_rates():
     target = r'/src/in/last_rate_file.xlsx'
 
     shutil.copyfile(original, target)
-    return ("Your Newest rates is in your /in file in the name : last_rate_file.xlsx" , 200)
+    return ("Your Newest rates is in your /in directory in the name : last_rate_file.xlsx" , 200)
 
     
 if __name__ == '__main__':

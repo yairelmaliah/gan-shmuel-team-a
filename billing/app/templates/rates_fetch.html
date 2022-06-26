@@ -2,61 +2,46 @@
 <html>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-        function room() {
-          var room = window.location.href.substring(window.location.href.lastIndexOf('/')+1);
-          return "/api/truck"+room;
-        }
-        
-        // function updateChat() {
-        //   $.get(room(),function(data) {
-        //     $("#chatbox").text(data);
-        //     window.setTimeout(updateChat,15000);
-        //   })
-        // }
-
-        // let data = {
-        //   name: 'Sammy'
-        // }
-        // async function start() {
-        //   var my_url = "http://localhost:5000/api/truck";
-        //   let response = await fetch(`${my_url}`, {method: "POST"});
-        //   console.log(response)
-        //   let data = await response.json()
-        //   console.log(data)
-        //  // let text = JSON.stringify(data) // read response body as text
-        //   alert(text)
-        // }
+            function bill_id() {
+                var bill_id = location.href;
+            }
+            const url = location.href;
+            const lastSegment = url.split("/")
+            let idnumber = lastSegment[lastSegment.length-1];
             setTimeout(function() {
-              $("input[id='provider_id']").val("10009")
-              $("input[id='truck_id']").val("200-10-300")
+              // document.getElementById("idnumber").innerHTML = idnumber;
+            //   $("input[id='truck_id']").val("155-34-443");
+            //   $("input[id='from']").val("20210311203010");
+            //   $("input[id='to']").val("20230311203010");
             }, 150); 
           $(document).ready(function() {
             $('#sendBtn').click(function () {
-                var provider_id = $('#provider_id').val();
-                var truck_id = $('#truck_id').val();
-                const  str = "api/truck"
-                // console.log("id: ", truck_id())
-                // console.log("num: " + truck_number())
+                // var from = $('#from').val();
+                // var to = $('#to').val();
+                const  str = "/api/rates"
                 $.ajax({
                     url: str ,     //Your api url
-                    type: 'POST',   //type is any HTTP method
+                    type: 'GET',   //type is any HTTP method
                     data:
                       {
-                        provider_id:provider_id,
-                        truck_id:truck_id,
+                        // from:from,
+                        // to:to,
                     },
                     success: function (data, textStatus, xhr) {
                       // console.log(data)
-                      // const lastSegment = data.split("")
-                      // let idnumber = lastSegment[lastSegment.length + 1];
                       // console.log(idnumber)
                       // console.log(textStatus)
                       // console.log(xhr.status)
-                      alert(data)
+                    //   alert(
+                    //     "\nProvider Id: " + data.id +
+                    //     "\nSessions: " + data.sessions +
+                    //     "\ntara: " + data.tara
+                    //     )
+                        alert(data)
                     },
                     error: function (data, textStatus, xhr) {
+                      alert(data.responseText)
                       if (data.status === 409) {
-                        alert(data.responseText)
                       }
                       // console.log(data.responseText) // response message
                       // console.log(xhr.status)
@@ -64,22 +49,6 @@
                 })
             });
           });
-
-        // function sendmessage() {
-        //   // start()
-        //   $.post( room(), $( "#inform" ).serialize());
-        // }
-
-        // $(document).ready(function() {
-        //   $("input[name='provider_id']").val("10009")
-        //   $("input[name='truck_id']").val("200-10-300")
-
-        //   $("#chatbox").text("Loading Providers...");
-        //   $("#sendBtn").click(sendmessage)
-        //   // $("#sendBtn").click(makeRequestt)
-          
-        //   window.setTimeout(updateChat,15000);
-        // });
 
     </script>
 <head>
@@ -123,20 +92,21 @@ h1 {letter-spacing: 6px}
 <!-- Photo Grid -->
 <div class="w3-row-padding-32" style="margin-bottom:80px">
   <div class="w3-panel w3-center" style="padding:1px 1px">
-      <h3>Enter a new provider's truck: </h3>
+      <h3></h3>
       <br>
       <div class="truck-form">
-        <form id="inform" action="/api/truck" method="POST">
-          <b>Provider id: </b> <br> <input id="provider_id" type=text >
+        <form id="inform" action="" method="GET">
+          <!-- <b>license plate: </b> <br> <input id="truck_id" type=text >
           <br>
+          <b>From date: </b> <br> <input id="from" type=text >
           <br>
-          <b>Truck license plate: </b> <br> <input id="truck_id" type=text >
-          <br>
-          <input id="sendBtn" type="button" value="submit">
+          <b>To date: </b> <br> <input id="to" type=text >
+          <br> -->
+          <input id="sendBtn" type="button" value="Get a copy of the newest rates">
           <br>
         </form>
-        <a href="/truck/update"><button class="update-provider">Update truck</button></a>
-        <a href="/truck/fetch"><button class="update-provider">Truck info</button></a>
+        <br>
+        <a href="/rates"><button class="update-provider">Update file</button></a>
       </div>
       <!-- <button class="update-provider">update provider</button> -->
   </div>

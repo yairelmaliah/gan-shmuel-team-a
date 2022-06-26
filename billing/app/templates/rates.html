@@ -1,31 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    function room() {
+      var room = window.location.href.substring(window.location.href.lastIndexOf('/')+1);
+      return "/api/"+room;
+    }
+    
+    setTimeout(function(){
+        $("input[id='file']").val("rates.xlsx");
+
+      }, 150); 
+    $(document).ready(function() {
+          $('#sendBtn').click(function () {
+              var file = $('#file').val();
+              const  str = "api/rates/" + $("input[id='file']").val()
+              $.ajax({
+                  url: str ,     //Your api url
+                  type: 'POST',   //type is any HTTP method
+                  data:
+                    {file:file
+                  },
+                  success: function (data, textStatus, xhr) {
+                    alert(
+                      file + " added! \n" + xhr.responseText
+                    )
+                  },
+                  error: function (data, textStatus, xhr) {
+                    alert(data.responseText)
+                    if (data.status === 409) {
+                    }
+                    console.log(data.responseText) // response message
+                    // console.log(xhr.status)
+                  } 
+              })
+          });
+      });
+  </script>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<title>Providers</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+<link rel="stylesheet" href="../static/stlye.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1 {font-family: "Raleway", Arial, sans-serif}
+h1 {letter-spacing: 6px}
+.w3-row-padding img {margin-bottom: 12px}
+</style>
 </head>
 <body>
-    <nav class="headNev">
-        <a class="headNevLink1" href="/">  <i>Index</i></a>
-        <a class="headNevLink2" href="/health">Health </a>
-        <a class="headNevLink1" href="/provider">Providers</a>
-        <a class="headNevLink1" href="/provider_id">update Providers</a>
-        <a class="headNevLink2" href="/rates">Rates</a>
-        <a class="headNevLink1" href="/truck">Trucks </a>
-        <a class="headNevLink2" href="/bill">Bills </a>
-    </nav>
-    
-    <div class="contentBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray">
-        <form id="inform" action="/api/rates.html" method="POST">
-          <h4> Upload file </h4>
-          <input name="msgfile" type=text>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-content" style="max-width:1500px">
+
+<!-- Header -->
+<header class="w3-panel w3-center w3-opacity" style="padding:8px 16px">
+  <h1 class="w3-xlarge">Welcome To Kibbutz Gam-Shmuel</h1>
+  <h1>A-Billing Services</h1>
+  <h8>By: Rotem Kalman, Oshri Zafrani, Asres Frede</h8>
+  
+  <div class="w3-padding-32">
+    <div class="w3-bar w3-border">
+      <a href="/" class="w3-bar-item w3-button">Home</a>
+      <a href="/health" class="w3-bar-item w3-button w3-light-grey">Health</a>
+      <a href="/provider" class="w3-bar-item w3-button w3-hide-small">Provider</a>
+      <a href="/truck" class="w3-bar-item w3-button w3-hide-small">Trucks</a>
+      <a href="/rates" class="w3-bar-item w3-button w3-hide-small">Rates</a>
+      <a href="/bill" class="w3-bar-item w3-button w3-hide-small">Bill</a>
+    </div>
+  </div>
+</header>
+
+<!-- Photo Grid -->
+<div class="w3-row-padding-32" style="margin-bottom:80px">
+  <div class="w3-panel w3-center" style="padding:1px 1px">
+      <h3>Enter the name of the file you uploaded: </h3>
+      <br>
+      <div class="contentBlock">
+        <form id="inform" action="/api/provider" method="POST">
+          <b>File name : </b> <br> <input id="file" type=text required>
+          <br>
           <input id="sendBtn" type="button" value="submit">
+          <br>
         </form>
-        <h5 id="chatbox"></h5>
+        <a href="/rates/fetch"><button class="update-provider">Rates info</button></a>
       </div>
-      <div class="imageBlock"  style="top:200px; left:70px; font-family: Arial, sans-serifserif;color: dimgray">
-      </div>
+      <!-- <button class="update-provider">update provider</button> -->
+  </div>
+</div>
+
+  
+<!-- End Page Content -->
+</div>
+  
+<!-- End Page Content -->
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-61 w3-light-grey w3-center w3-medium"> 
+  <h8>A-Billing services by <a href="/" target="_blank" class="w3-hover-text-green">Oshri Zafrani, Rotem Kalman, Asres Frede </a></h8>
+</footer>
+
 </body>
 </html>

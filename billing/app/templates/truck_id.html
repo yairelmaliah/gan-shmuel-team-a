@@ -3,11 +3,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   
   <script type="text/javascript">
-      function truck_id() {
-        var truck_id = location.href;
-        // truck_id = href.match(/([^\/]*)\/*$/)[1];
-        console.log(truck_id)
-      }
+      // function truck_id() {
+      //   var truck_id = location.href;
+      //   // truck_id = href.match(/([^\/]*)\/*$/)[1];
+      //   console.log(truck_id)
+      // }
         function truck_number() {
             return  window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
       }
@@ -27,20 +27,22 @@
       const lastSegment = url.split("/")
       let idnumber = lastSegment[lastSegment.length-2];
       setTimeout(function(){
-        document.getElementById("idnumber").innerHTML = idnumber;
+        // document.getElementById("idnumber").innerHTML = idnumber;
+        $("input[id='truck_id']").val("200-10-301");
         $("input[id='provider_id']").val("10005");
-      }, 100); 
+      }, 150); 
       $(document).ready(function() {
           $('#sendBtn').click(function () {
+              var truck_id = $('#truck_id').val();
               var provider_id = $('#provider_id').val();
-              const  str = truck_id()
-              // console.log("id: ", truck_id())
-              // console.log("num: " + truck_number())
+              const  str = $("input[id='truck_id']").val()
               $.ajax({
                   url: str ,     //Your api url
                   type: 'PUT',   //type is any HTTP method
                   data:
-                    {provider_id:provider_id
+                    {
+                      truck_id:truck_id,
+                      provider_id:provider_id
                   },
                   success: function (data, textStatus, xhr) {
                     // console.log(data)
@@ -102,16 +104,19 @@ h1 {letter-spacing: 6px}
 <!-- Photo Grid -->
 <div class="w3-row-padding-32" style="margin-bottom:80px">
   <div class="w3-panel w3-center" style="padding:1px 1px">
-      <h3>Update the provider of this truck owner: <span id="idnumber"></span></h3>
+      <h3>Update the provider of the truck owner:</h3>
       <br>
       <div class="truck-form">
-        <form id="inform" action="/api/" method="POST">
+        <form id="inform" action="" method="POST">
+          <b>Truck id: </b> <br> <input id="truck_id" type=text >
+          <br>
           <b>Provider id: </b> <br> <input id="provider_id" type=text >
           <br>
           <input id="sendBtn" type="button" value="submit">
           <br>
         </form>
         <a href="/truck"><button class="update-provider">Enter new truck</button></a>
+        <a href="/truck/fetch"><button class="update-provider">Truck info</button></a>
       </div>
       <!-- <button class="update-provider">update provider</button> -->
   </div>

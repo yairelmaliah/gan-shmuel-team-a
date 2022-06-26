@@ -62,7 +62,7 @@ def test_post_provider():
 
 def test_put_provider():
   payload = {'new_provider':'MosheTapuzima'} # because its send it with form
-  req = requests.put(f"{url}/api/provider/10001", data=payload)
+  req = requests.put(f"{url}/provider/10001", data=payload)
   log_name = "PUT(UPDATE) PROVIDER"
   status_code = req.status_code
   if ((status_code >= 200 and status_code < 299) and status_code != 409):

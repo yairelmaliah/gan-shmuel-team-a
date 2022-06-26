@@ -14,7 +14,7 @@ def GET_bill(id):
 
  ##################################### check data ####################################    
     currentDT = datetime.now()
-    provider_id = str(id)
+    provider_id = id
   
     id_check = my_sql.getData(f'SELECT EXISTS(SELECT * FROM `Provider` WHERE id="{provider_id}");')
     dump = json.dumps(id_check)
@@ -25,8 +25,8 @@ def GET_bill(id):
 
     try:
 
-        from_date = request.args['from']
-        to_date = request.args['to']
+        from_date = request.form['from']
+        to_date = request.form['to']
 
         if from_date > to_date:
             return("from date is larger than to date. please try again.", 409)
