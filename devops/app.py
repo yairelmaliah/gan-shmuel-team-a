@@ -10,6 +10,8 @@ def build_app(data):
     # Extract data from github request
     branch_name = data['ref'].split('/')[-1]
     pusher_github_name = data["pusher"]["name"]
+    print(f"Branch Name: {branch_name}",flush= True)
+    print(f"Pusher Name: {pusher_github_name}",flush= True)
     
     if branch_name not in BRANCHES_ALLOWED:
         print("Branch is not allowed, abort...", flush=True)
@@ -85,7 +87,6 @@ def health():
 @app.route('/webhook', methods = ['POST'])
 def webhook():
     data = request.get_json()
-    print(data,flush= True)
     return build_app(data)
  
 if __name__ == '__main__':
