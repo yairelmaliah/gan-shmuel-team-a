@@ -17,21 +17,21 @@ def id_check(where,what):
     return value_id
 
 
-def PUT_truck(id):
+def PUT_truck(truck_id):
 
-    license_plate = str(id)
-    new_id = request.args['provider_id']
+    license_plate = str(truck_id)
+    provider_id = request.form['provider_id']
     
 
     if id_check(what="Trucks",where=license_plate) != str(1):
         return (f"your truck id : {license_plate} is not exist! please try again.", 409)
 
-    elif id_check(what="Provider",where=new_id) == str(0):
-        return (f"your provider id : {new_id} is not exist! please try again." , 409)
+    elif id_check(what="Provider",where=provider_id) == str(0):
+        return (f"your provider id : {provider_id} is not exist! please try again." , 409)
 
     else:
-        my_sql.updateData(f'UPDATE `Trucks` SET provider_id = {new_id} WHERE id = "{license_plate}";')
-        return(f"Enjoy! your  license plate : {license_plate} changed provider id to {new_id}!", 200)
+        my_sql.updateData(f'UPDATE `Trucks` SET provider_id = {provider_id} WHERE id = "{license_plate}";')
+        return(f"Enjoy! your  license plate : {license_plate} changed provider id to {provider_id}!", 200)
 
 
 if __name__ == '__main__':
